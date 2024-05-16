@@ -28,8 +28,8 @@ cd example-app
 php artisan serve
 ```
 
-
-#### VS CODE EXTENSIONS
+#### VS CODE EXTENSIONS  
+##### use full easy coding in Laravel
 
 - PHP IntelliSens (Damian Cvetko)
 -  PHP Namespace Resolver (Mehedi Hassan)
@@ -43,16 +43,109 @@ php artisan serve
 
 
 
+### Routing
+
+##### Basic Routing
+
+```php
+use Illuminate\Support\Facades\Route;
+ 
+Route::get('/greeting', function () {
+    return 'Hello World';
+});
+```
+
+
+##### View Routes
+```php
+Route::view('/welcome', 'welcome');
+```
+
+
+##### Route Parameters
+
+```php
+Route::get('/user/{id}', function (string $id) {
+    return 'User '.$id;
+});
+
+```
+
+
+##### Route Optional Parameters
+
+```php
+Route::get('/post/{id?}', function (string $id = null) {
+    if ($id) {
+        return "<h1> POST ID : " . $id . "</h1>";
+    } else {
+        return "<h1>NO ID FOUND</h1>";
+    }
+});
+```
+
+
+##### Route Multipulte Optional Parameters
+
+```php
+Route::get('/post/{id?}/comment/{commentid}', function (string $id = null, string $coommentId = null) {
+    if ($id) {
+        return "<h1> POST ID : " . $id . "$ comment" . $coommentId . "</h1>";
+    } else {
+        return "<h1>NO ID FOUND</h1>";
+    }
+});
+
+```
 
 
 
+##### Router Constraints 
+
+-WhereNumber
+-WhereAlpha
+-whereAlpha
+-weherAlphaNumeric
+-whereIn
+-where
+
+```php
+Route::get('/user/{id}', function (string $id) {
+    return 'User '.$id;
+})->whereNumber('id');
+
+```
+
+###### User Define Values
+```php
+Route::get('/user/{id}', function (string $id) {
+    return 'User '.$id;
+})->wherein('id' ,['movie','song','paomtomg']);
+
+```
 
 
+##### Router Regular Expressions
+
+```php
+Route::get('/user/{id}', function (string $id) {
+    return 'User '.$id;
+})->where('id' ,'[0-9]+');
+```
 
 
+##### Route Multipulte Optional Parameters Constraints
 
+```php
+Route::get('/post/{id?}/comment/{commentid}', function (string $id = null, string $coommentId = null) {
+    if ($id) {
+        return "<h1> POST ID : " . $id . "$ comment" . $coommentId . "</h1>";
+    } else {
+        return "<h1>NO ID FOUND</h1>";
+    }
+})->where('id' ,'[0-9]+')->whereAlpha('commentid');
 
-
+```
 
 
 
