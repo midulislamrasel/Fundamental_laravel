@@ -102,12 +102,12 @@ Route::get('/post/{id?}/comment/{commentid}', function (string $id = null, strin
 
 ##### Router Constraints 
 
--WhereNumber
--WhereAlpha
--whereAlpha
--weherAlphaNumeric
--whereIn
--where
+- WhereNumber
+- WhereAlpha
+- whereAlpha
+- weherAlphaNumeric
+- whereIn
+- where
 
 ```php
 Route::get('/user/{id}', function (string $id) {
