@@ -5,12 +5,12 @@
 
 
 ### Installed
-###### After you have installed PHP and Composer, you may create a new Laravel project via Composer's create-project command:
+##### After you have installed PHP and Composer, you may create a new Laravel project via Composer's create-project command:
 ```php
 composer create-project laravel/laravel example-app
 ```
 
-###### Or, you may create new Laravel projects by globally installing the Laravel installer via Composer:
+##### Or, you may create new Laravel projects by globally installing the Laravel installer via Composer:
 
 ```php
 composer global require laravel/installer
@@ -20,7 +20,7 @@ laravel new example-app
 ```
 
 
-###### Once the project has been created, start Laravel's local development server using Laravel Artisan's serve command:
+##### Once the project has been created, start Laravel's local development server using Laravel Artisan's serve command:
 
 ```php
 cd example-app
