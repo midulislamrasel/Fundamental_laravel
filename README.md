@@ -14,3 +14,56 @@
 ```php
 composer create-project laravel/laravel example-app
 ```
+
+###### Or, you may create new Laravel projects by globally installing the Laravel installer via Composer:
+
+```php
+composer global require laravel/installer
+ 
+laravel new example-app
+
+```
+
+
+###### Once the project has been created, start Laravel's local development server using Laravel Artisan's serve command:
+
+```php
+cd example-app
+ 
+php artisan serve
+```
+
+
+#### VS CODE EXTENSIONS
+
+*** PHP IntelliSens (Damian Cvetko)
+*** PHP Namespace Resolver (Mehedi Hassan)
+*** Laravel Extra Instellisense (amir)
+*** laravel-blade (Christian Howe)
+*** Laravel-Blade Snippets (Winnie Lin)
+*** Laravel goto view (codingyu)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
