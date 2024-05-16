@@ -10,7 +10,7 @@
 ###About 
 
 ### Installed
-#### After you have installed PHP and Composer, you may create a new Laravel project via Composer's create-project command:
+###### After you have installed PHP and Composer, you may create a new Laravel project via Composer's create-project command:
 ```php
 composer create-project laravel/laravel example-app
 ```
