@@ -36,12 +36,12 @@ php artisan serve
 
 #### VS CODE EXTENSIONS
 
-*** PHP IntelliSens (Damian Cvetko)
-*** PHP Namespace Resolver (Mehedi Hassan)
-*** Laravel Extra Instellisense (amir)
-*** laravel-blade (Christian Howe)
-*** Laravel-Blade Snippets (Winnie Lin)
-*** Laravel goto view (codingyu)
+- PHP IntelliSens (Damian Cvetko)
+-  PHP Namespace Resolver (Mehedi Hassan)
+- Laravel Extra Instellisense (amir)
+- laravel-blade (Christian Howe)
+- Laravel-Blade Snippets (Winnie Lin)
+- Laravel goto view (codingyu)
 
 
 
