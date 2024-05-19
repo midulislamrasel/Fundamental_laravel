@@ -195,3 +195,31 @@ Route::prefix('page')->group(function () {
 
 ```
 
+#### Page Not Found
+
+```php
+Route::fallback(function(){
+eturn "<h1>Page Note Found . </h1>";
+})
+```
+
+
+
+### Blade Template
+Template Engine Based on PHP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
