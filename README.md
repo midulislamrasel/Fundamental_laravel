@@ -148,7 +148,18 @@ Route::get('/post/{id?}/comment/{commentid}', function (string $id = null, strin
 ```
 
 
+###### Named Routes
 
+```php
+Route::get('test2', function () {
+    return view('testPage');
+})->name('mypost');
+
+
+<!--- USE CODE -->
+
+<a href="{{route('mypost')}}">About 2 page</a>
+```
 
 
 
