@@ -162,7 +162,36 @@ Route::get('test2', function () {
 ```
 
 
+##### Redirect Routing
+```php
+Route::get('test2', function () {
+    return view('test_Page');
+})->name('my_post);
+
+<---! The old route is my_post new route tes--->
+
+Route::redirect('/my_post', '/test');
+Route::redirect('/my_post', '/test' , 301);
+```
 
 
 
+#### Route Groups // Route Prefixes
+
+```php
+Route::prefix('page')->group(function () {
+    Route::get('/post1/1', function () {
+        return view('page1');
+    });
+    Route::get('/post2/1', function () {
+        return view('page2');
+    });
+    Route::get('/post3/1', function () {
+        return view('page3');
+    });
+});
+
+//used path:  page/post1/1
+
+```
 
