@@ -148,7 +148,7 @@ Route::get('/post/{id?}/comment/{commentid}', function (string $id = null, strin
 ```
 
 
-###### Named Routes
+##### Named Routes
 
 ```php
 Route::get('test2', function () {
