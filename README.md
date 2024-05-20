@@ -222,8 +222,13 @@ video 10
     @yield('content')
 </body>
 
+-----Other page used-----
+@section('content')
+    <h1> This is Post Page</h1>
+@endsection
+
 ```
-####### @yield('content','default_parameter')
+###### @yield('content','default_parameter')
 
 
 ```php
@@ -320,14 +325,44 @@ video 10
 ```php
  @stack('scripts')
 
-------------------
-USED Others PAGE
+--------USED Others PAGE----------
 
 @push('scripts')
          <script src='/example.js'></script>
 @endpush
 
 ```
+
+#### used @stack and @prepend  (Inline CSS) 
+
+```php
+ @stack('styles')
+
+------Other pages -----
+
+@prepend('styles') <---! kar upore ami likhte chaichi (styles CSS er upore style add korte chaichi) --->
+    <style>
+    #hader{
+      background-color: red;
+    }
+    </style>
+@endprepend
+```
+
+
+
+#### JavaScript Frameworks (vueJs)
+```php
+@verbatim
+    {{user}}
+@endvarbatim
+```
+
+
+
+
+
+
 
 
 
