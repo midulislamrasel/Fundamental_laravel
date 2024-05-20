@@ -213,19 +213,19 @@ Template Engine Based on PHP
 
 
 
+video 10
 
-
-=================
-#### Template Inheritance
-=================
+## Template Inheritance
 ```php
 <body>
     <h1>This page show all Templates</h1>
     @yield('content')
 </body>
-```
 
-#### 
+```
+####### @yield('content','default_parameter')
+
+
 ```php
 @extends('layouts.master_layout)
 
@@ -235,6 +235,99 @@ Template Engine Based on PHP
 ```
 
 
+##### chack in a value set or not used @hasSection and @yield default page 
+```php
+        @hasSection('content')
+            @yield('content')
+        @else
+            <h1>This Section No Define</h1>
+        @endif
+```
+
+
+
+
+#### jodi kono section er pore amara kono default kichu dite chai tahole @section er pore @show thkakte hobe @section end kora jabe na
+
+```php
+@section('sidebar')
+ <ul>
+   <li><a href="home">Home</a></li>
+   <li><a href="home">Home</a></li>
+   <li><a href="home">Home</a></li>
+ </ul>
+@show
+```
+
+```php
+@section('sidebar')
+ @parent
+ <p> add one pore title </p>
+@endsection
+```
+
+##### asset
+```php
+<link rel="stylesheet" heft="{{asset('css/style.css')}}">
+```
+
+
+
+##### PHP IN JAVASCRIPT
+
+```php
+  @php
+      $user = "Miudl";
+  @endphp
+  
+  <script>
+      var data = @json($user);
+      console.log(data);
+  </script>
+```
+
+```php
+@php
+    $fruits = ['Apple',' Bannana', 'Grapes', 'Orange'];
+@endphp
+ <script>
+         var data = @json($fruits);
+         data.forEach(function (entry){
+            console.log(entry)
+        })
+ </script>
+```
+
+#### PHP IN JAVASCRIPT Othe Method 
+```php
+@php
+    $fruits = ['Apple',' Bannana', 'Grapes', 'Orange'];
+@endphp
+
+
+    var data2 = {{Js::from($fruits)}};
+    
+    data2.forEach(function (entry){
+        console.log(entry)
+    })
+```
+
+
+
+
+### Js In Template Inheritance
+
+```php
+ @stack('scripts')
+
+------------------
+USED Others PAGE
+
+@push('scripts')
+         <script src='/example.js'></script>
+@endpush
+
+```
 
 
 
