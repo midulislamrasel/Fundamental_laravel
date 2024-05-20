@@ -214,3 +214,42 @@ Template Engine Based on PHP
 
 
 
+
+=================
+#### Template Inheritance
+=================
+```php
+<body>
+    <h1>This page show all Templates</h1>
+    @yield('content')
+</body>
+```
+
+#### 
+```php
+@extends('layouts.master_layout)
+
+@section('content')
+    <h1> This is Post Page</h1>
+@endsection
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
