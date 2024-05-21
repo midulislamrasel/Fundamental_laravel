@@ -377,6 +377,64 @@ Route::get('/users',function (){
 
 ```
 
+```php
+
+Route::get('/users',function (){
+    $name = [
+        'a' => ['name'=>'Ahmed','email'=>'ahmed@gmail.com','phone'=>'01547854122','city'=>'Dhaka'],
+        'b' => ['name'=>'Manik','email'=>'manik@gmail.com','phone'=>'01547854122','city'=>'NOGA'],
+        'c' => ['name'=>'Ahammad','email'=>'ahammad@gmail.com','phone'=>'01547854122','city'=>'Meherpur'],
+        'd' => ['name'=>'Rana','email'=>'rana@gmail.com','phone'=>'01547854122','city'=>'Khulna'],
+    ];
+
+    return view('users',[
+        'user'=>$name
+    ]);
+});
+
+
+
+//---------------use Fille --------
+
+
+    @foreach($user as $id => $u)
+        <h>{{$id}} | {{$u['name']}} | {{$u['email']}} <br> </h>
+    @endforeach
+
+```
+
+
+
+
+```php
+function  getUser(){
+    return [
+        'a' => ['name'=>'Ahmed','email'=>'ahmed@gmail.com','phone'=>'01547854122','city'=>'Dhaka'],
+        'b' => ['name'=>'Manik','email'=>'manik@gmail.com','phone'=>'01547854122','city'=>'NOGA'],
+        'c' => ['name'=>'Ahammad','email'=>'ahammad@gmail.com','phone'=>'01547854122','city'=>'Meherpur'],
+        'd' => ['name'=>'Rana','email'=>'rana@gmail.com','phone'=>'01547854122','city'=>'Khulna'],
+    ];
+};
+
+Route::get('/users',function (){
+    $name = getUser();
+
+    return view('users',[
+        'user'=>$name
+    ]);
+});
+
+
+Route::get('user/{id}',function ($id){
+    $users = getUser();
+    $user = $users[$id];
+
+    return view('user',[ 'id'=>$user]);
+});
+
+
+
+```
 
 
 
