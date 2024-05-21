@@ -360,6 +360,35 @@ video 10
 
 
 
+#### ROUTE TO VIEW
+
+```php
+Route::get('/users',function (){
+       $name = "Yahoo Baba";
+       return view('user',['user'=>$name]);
+//     return view('users')->with('user', $name)->with('city','Dhaka');
+//     return view('users')->withUser($name)->withCity('Dhaka');
+
+});
+
+
+---------use fille ---------
+ <h2>Hello {{$user}}</h2>
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
