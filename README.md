@@ -436,7 +436,7 @@ Route::get('user/{id}',function ($id){
 
 ```
 
-
+## Controller
 
 
 
