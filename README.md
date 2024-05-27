@@ -439,12 +439,25 @@ Route::get('user/{id}',function ($id){
 ## Controller
 
 
+##### All comment used Terminal
+```php
 
+###### All Laravel  command [options] [arguments]
 
+```php
+php artisan
+```
 
+##### controller Help File
+```php
+php artisan help make:controller
+```
+###### Controller create
+```php
+php artisan make:controller PageController
+```
 
-
-
+```
 
 
 
