@@ -460,9 +460,17 @@ php artisan make:controller PageController
 
 
 
+### Input Routes Folder Web.php
 
+###### Controllers Route Filee
+```php
+use App\Http\Controllers\PageController;
 
+//--------------Router------------//
 
+Route::get('/pages',[PageController::class,'showUser']);
+
+```
 
 
 
