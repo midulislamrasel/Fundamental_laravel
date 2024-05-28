@@ -474,9 +474,15 @@ Route::get('/pages',[PageController::class,'showUser']);
 
 
 
+### Controllers Group -> Route
 
+```php
+Route::controller(PageController::class)->group(function(){
+    Route::get('/pages','showHome');
+    Route::get('/about','showAbout');
+});
 
-
+```
 
 
 
