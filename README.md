@@ -502,6 +502,82 @@ php artisan route:list --path=user
 ```
 
 
+## Database used 
+
+### (C:01) Create a migration file
+```php
+php artisan make: migration create_student_table
+```
+
+
+### (C:02) Create Database migration
+```php
+php artisan migrate
+```
+
+
+### (C:03) Chack migrate Run
+```php
+php artisan migrate: status
+```
+
+
+### lst migrate delete
+```php
+php artisan migrate:rollback
+```
+
+### Specific migrate delete
+second, migrate delete
+```php
+php artisan migrate:rollback --batch=2
+```
+
+
+###  migrate Reset
+all remove
+```php
+php artisan migrate:reset
+```
+
+
+###  migrate Refresh
+all roll back migrations and running migration
+```php
+php artisan migrate:refresh
+```
+
+
+###  migrate Fresh
+Dropping all table and creating migration table
+```php
+php artisan migrate:fresh
+```
+
+
+### Model and Migrate create 
+```php
+php artisan make:model Test -m
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
