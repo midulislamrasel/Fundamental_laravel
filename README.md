@@ -484,8 +484,22 @@ Route::controller(PageController::class)->group(function(){
 
 ```
 
+### Invokable
+```php
+ php artisan make:controller TestingController --invokable
+```
 
 
+### All Route path chack & class,method
+```php
+php artisan route:list --except-vendor
+```
+
+
+### singel Route path chack & class,method (user)
+```php
+php artisan route:list --path=user
+```
 
 
 
