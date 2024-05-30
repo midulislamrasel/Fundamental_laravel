@@ -565,10 +565,14 @@ php artisan make:model Test -m
 
 
 
-```diff
- - Modification Whit Migration**
-```
 
+<style>
+H1{color:Blue !important;}
+H2{color:DarkOrange !important;}
+p{color:Black !important;}
+</style>
+
+## Modification with Migration
 
 
 
