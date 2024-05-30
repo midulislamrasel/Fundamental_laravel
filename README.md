@@ -561,11 +561,13 @@ php artisan make:model Test -m
 ```
 
  
-$${\color{red} Modification Whit Migration}$$
 
 
 
 
+```diff
+## - Modification Whit Migration**
+```
 
 
 
