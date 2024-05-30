@@ -576,7 +576,112 @@ php artisan make:model Test -m
 
 ## Modification with Migration
 
+### Column Modification 
+  ##### Add New Column
+  ##### Rename COlumn
+  ##### Delete Column
+  ##### Change Column Order
+  ##### Change Datatype or size of Column
+  
+#### Table Modification 
+ ##### Rename Table
+ ##### Delete Table
 
+
+
+
+#### add to column with Migration
+
+### (step:01)
+ ```php
+ php artisan make:migration add_paid_to_users_table --table=users
+```
+
+
+
+### (step:02)
+ ```php
+return new class extends Migration
+{
+
+    public function up(): void
+    {
+        Schema::table('students', function (Blueprint $table) {
+            $table->string('city')
+        });
+    }
+}
+```
+
+### (step:03)
+```php
+php artisan migrate
+```
+
+==========================Exta commnetd =================================
+```php
+$table->renameColumn('from', 'to');
+```
+
+```php
+$table->dropColumn('city');
+```
+
+```php
+$table->dropColumn('city', 'location'......);
+```
+
+##### one change
+```php
+$table->dropColumn('city',40)-change();
+```
+
+##### multipule change
+```php
+$table->integer('votes')->unsigned()->default(1)->comment('mycomment)->change()
+```
+
+
+
+
+#### constraints with Migration
+
+  - NOT NULL         $table->string('email')->nullable()
+  - UNIQUE           $table->string('email')->uniqe()
+  - DEFAULT          $table->string('email')->default('Dhaka')
+  - PRIMARY KEY      $table->string('email')->primary('id')
+  - FOREIGN KEY      $table->string('email')->foreign('id')->references('id')->on('users')
+  - CHECK           
+       
+    
+
+#### Foreign Key with Cascade
+
+```php
+   $table->foreign('stu_id')->references('id')->on('students')
+  -------------2------------
+   $table->foreign('stu_id')->constrained('students')
+```
+
+#####  Cascade
+```php
+return new class extends Migration
+{
+   public function up(): void
+    {
+        Schema::create('libraries', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('stu_id');
+            $table->foreign('stu_id')->references('id')->on('students')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->string('book');
+            $table->date('due_date')->nullable();
+            $table->boolean('status')->default(0);
+        });
+    }
+
+```
 
 
 
