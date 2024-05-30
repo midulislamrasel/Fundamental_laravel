@@ -560,10 +560,8 @@ php artisan migrate:fresh
 php artisan make:model Test -m
 ```
 
-
-`#f03c15`  ## Modification Whit Migration
-
-- This text is colored
+ 
+$${\color{red}## Modification Whit Migration}$$
 
 
 
