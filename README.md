@@ -566,7 +566,7 @@ php artisan make:model Test -m
 
 
 ```diff
-## - Modification Whit Migration**
+ - Modification Whit Migration**
 ```
 
 
