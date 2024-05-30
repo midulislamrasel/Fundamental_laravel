@@ -561,8 +561,7 @@ php artisan make:model Test -m
 ```
 
 
-
-> [!Modification Whit Migration]  
+`#f03c15`  ## Modification Whit Migration
 
 
 
