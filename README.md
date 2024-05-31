@@ -677,6 +677,26 @@ return new class extends Migration
 
 ```
 
+#####  Drop key constraints
+```php
+$table->dropPrimary('user_id_primary');
+```
+
+#####  Drop Unique
+```php
+$table->dropUnique('user_id_primary');
+```
+
+#####  Drop Foreign_key
+```php
+$table->dropForeign('user_id_primary');
+/----------Other----------/
+$table->dropForeign(['user_id']);
+```
+
+
+
+
 
 
 
