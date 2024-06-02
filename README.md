@@ -695,18 +695,49 @@ $table->dropForeign(['user_id']);
 ```
 
 
+## Step to work in Seeder
+### (step:01)
+```php
+php artisan make:model student
+```
+### (step:02)
+```php
+php artisan make:seeder StudentSeeder
+```
+### (step:03)
+```php
+use App\Models\studet;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
+class StudentSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        studet::created([
+            'name'->'yahoo baba',
+            'email'->'yahoo baba@gmail.com'
+        ]);
+    }
+}
+```
 
+### (step:04)
+```php
+seeders/DatabaseSeeder.php   ->(File)
+//** ------------Example-------- **/
+$this->call([
+     StudentSeeder::class 
+ ])
+```
 
-
-
-
-
-
-
-
-
-
+### (step:05)
+```php
+ php arisan db:seed
+```
 
 
 
