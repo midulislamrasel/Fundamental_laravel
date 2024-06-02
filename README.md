@@ -584,7 +584,7 @@ php artisan make:model Test -m
 
 
 
-#### add to column with Migration
+# add to column with Migration
 
 ### (step:01)
  ```php
@@ -611,8 +611,7 @@ return new class extends Migration
 ```php
 php artisan migrate
 ```
-
-==========================Exta commnetd =================================
+===============Exta commnetd ==================
 ```php
 $table->renameColumn('from', 'to');
 ```
