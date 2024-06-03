@@ -739,5 +739,76 @@ $this->call([
 ```
 
 
+## Steps to Work in Factory
+
+#### (step:01)
+```php
+php arisan make:model student
+```
+
+#### (step:02)
+```php
+php artisan make:factory studentFactory
+```
+
+#### (step:03)
+```php
+class StudentFactory extends Factory {
+ public function definition():array{
+  return[
+     'name'=>fack()->name(),
+     'email'=>fack()->email()
+  ];
+ }
+}
+```
+
+#### (step:04)
+```php
+Seeders/DatabaseSeeder.php -----(File)
+//-----------//
+ use App/Models/student;
+student::factory()->count(5)->create();
+```
+
+#### (step:05)
+```php
+php artisan db:send
+```
+
+```php
+#1
+php artisan make:factory studentFactory
+
+#2
+(Factory  & Model  )
+php artisan make:factory studentFactory --model=Student
+
+#3
+(Model & Factory)
+php artisan make:model student -f
+
+#4
+php artisan db:seed
+
+#5 (Nidisto kono seeder )
+php artisan db:seed --class=UserSeeder
+
+#6 (Migration & Seeding)
+php artisan migrate:fresh --seed 
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
