@@ -695,15 +695,15 @@ $table->dropForeign(['user_id']);
 
 
 ## Step to work in Seeder
-### (step:01)
+##### (step:01)
 ```php
 php artisan make:model student
 ```
-### (step:02)
+##### (step:02)
 ```php
 php artisan make:seeder StudentSeeder
 ```
-### (step:03)
+##### (step:03)
 ```php
 use App\Models\studet;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -724,7 +724,7 @@ class StudentSeeder extends Seeder
 }
 ```
 
-### (step:04)
+##### (step:04)
 ```php
 seeders/DatabaseSeeder.php   ->(File)
 //** ------------Example-------- **/
@@ -733,7 +733,7 @@ $this->call([
  ])
 ```
 
-### (step:05)
+##### (step:05)
 ```php
  php arisan db:seed
 ```
@@ -741,17 +741,17 @@ $this->call([
 
 ## Steps to Work in Factory
 
-#### (step:01)
+##### (step:01)
 ```php
 php arisan make:model student
 ```
 
-#### (step:02)
+##### (step:02)
 ```php
 php artisan make:factory studentFactory
 ```
 
-#### (step:03)
+##### (step:03)
 ```php
 class StudentFactory extends Factory {
  public function definition():array{
@@ -763,7 +763,7 @@ class StudentFactory extends Factory {
 }
 ```
 
-#### (step:04)
+##### (step:04)
 ```php
 Seeders/DatabaseSeeder.php -----(File)
 //-----------//
@@ -771,11 +771,14 @@ Seeders/DatabaseSeeder.php -----(File)
 student::factory()->count(5)->create();
 ```
 
-#### (step:05)
+##### (step:05)
 ```php
 php artisan db:send
 ```
 
+
+
+###  Factory and other command
 ```php
 #1
 php artisan make:factory studentFactory
@@ -798,6 +801,81 @@ php artisan db:seed --class=UserSeeder
 php artisan migrate:fresh --seed 
 
 ```
+
+
+
+
+## Steps to Work in Query Builder
+
+##### (step:01)
+create-controller
+```php
+php artisan make:controller UserController
+```
+
+
+##### (step:02)
+```php
+use illumiate\Support\Facades\DB
+
+class UserController extends Controller{
+ public function show(){
+   $user = DB::table('users')->get();
+   return $users;
+ }
+}
+```
+
+
+##### (step:03)
+route-setup
+
+```php
+use App\Http\Controllers\UserController;
+
+Route::get('/user'.[UserController::class,'show']);
+```
+
+
+my SQL         -> SELECT * FROM users
+Query Builder  -> DB::table('users')->get()
+
+my SQL         -> SELECT name,city From users
+Query Builder  -> DB::table('users')->select('name','city')->get()
+
+my SQL         -> SELECT FROM User WHERE city = 'Dhaka';
+Query Builder  -> DB::table('users')->where('city','=','Dhaka')->get()
+Query Builder  -> DB::table('users')->where('city','=','Dhaka')->where('age','=>','19')
+Query Builder  -> DB::table('users')->where('city','=','Dhaka')->orwhere('age','=>','19')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
