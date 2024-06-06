@@ -700,10 +700,13 @@ $table->dropForeign(['user_id']);
 php artisan make:model student
 ```
 ##### (step:02)
+###### tables name students and create seeder name student (s) not used and mustbe used studentSeeder
 ```php
 php artisan make:seeder StudentSeeder
 ```
 ##### (step:03)
+###### tables name students and create seeder name student (s) not used and mustbe used studentSeeder
+#### single data add
 ```php
 use App\Models\studet;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -716,15 +719,85 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
+
+      /*--Data insert-- used create*/
         studet::created([
-            'name'->'yahoo baba',
-            'email'->'yahoo baba@gmail.com'
+            'name'=>'yahoo baba',
+            'email'=>'yahoo baba@gmail.com'
         ]);
     }
 }
 ```
 
-##### (step:04)
+##### Multiple Data Ade
+
+```php
+class StudentSeeder extends Seeder
+{
+    public function run(): void
+    {
+
+ $student = collect(
+    [
+       [
+       'name'=>"Midul Islam",
+       'email'=>'midul@gamil.com'
+       ],
+       [
+       'name'=>"Rasel Islam",
+       'email'=>'rasel@gamil.com'
+       ],
+       [
+       'name'=>"Aktehr Islam",
+       'email'=>'aktehr@gamil.com'
+       ],
+       [
+       'name'=>"Samiul Islam",
+       'email'=>'samiul@gamil.com'
+       ]
+   ]
+);
+
+     $students->each(function($student){
+     student::insert($studnet)
+     })
+
+    }
+}
+
+```
+### JSON FILE Add
+```php
+
+/----input------/
+use Illuminate\Support\Faceds\File
+-----------------------------------------------
+
+ $json = File::get(path:'Database/json/studenst');
+
+ $studenst = collect(josn_decode($json));
+
+ $stundents->each(function($student){
+            stundents::created([
+            'name'=>stundents->name
+            'email'=>stundents->email
+        ]);
+ })
+ 
+
+
+
+
+
+```
+
+
+
+
+
+
+
+##### (step:04) 
 ```php
 seeders/DatabaseSeeder.php   ->(File)
 //** ------------Example-------- **/
@@ -733,10 +806,28 @@ $this->call([
  ])
 ```
 
+
 ##### (step:05)
 ```php
  php arisan db:seed
 ```
+
+### migrations fille fresh and seed data all comment
+```php
+    php artisan migrate:fresh --seed
+```
+
+#### onle run for Seeders 
+```php
+     db:seed --class=StudentSeeder
+``
+
+
+
+
+
+
+
 
 
 ## Steps to Work in Factory
@@ -837,6 +928,8 @@ Route::get('/user'.[UserController::class,'show']);
 ```
 
 
+
+### mySql VS Query Bulder
 ```php
 my SQL         -> SELECT * FROM users
 Query Builder  -> DB::table('users')->get()
