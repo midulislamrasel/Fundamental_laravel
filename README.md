@@ -768,7 +768,6 @@ class StudentSeeder extends Seeder
 ```
 ### JSON FILE Add
 ```php
-
 /----input------/
 use Illuminate\Support\Faceds\File
 -----------------------------------------------
@@ -783,14 +782,28 @@ use Illuminate\Support\Faceds\File
             'email'=>stundents->email
         ]);
  })
- 
-
-
-
-
-
 ```
 
+
+### Fack Data add 
+```php
+use App\Models\studet;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class StudentSeeder extends Seeder
+{
+    public function run(): void
+    {
+     for($i=0; $i<10; $i){
+        studet::created([
+            'name'=>fake()->name(),
+            'email'=>fake()->unique()->email()
+        ]);
+       }
+    }
+}
+```
 
 
 
