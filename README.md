@@ -837,6 +837,7 @@ Route::get('/user'.[UserController::class,'show']);
 ```
 
 
+```php
 my SQL         -> SELECT * FROM users
 Query Builder  -> DB::table('users')->get()
 
@@ -848,7 +849,7 @@ Query Builder  -> DB::table('users')->where('city','=','Dhaka')->get()
 Query Builder  -> DB::table('users')->where('city','=','Dhaka')->where('age','=>','19')
 Query Builder  -> DB::table('users')->where('city','=','Dhaka')->orwhere('age','=>','19')
 
-
+```
 
 
 
