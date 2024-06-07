@@ -961,26 +961,92 @@ Query Builder  -> DB::table('users')->where('city','=','Dhaka')->orwhere('age','
 
 
 
+### Queray Builder 
+
+##### (step:01)
+Database create 
+```php
+php artisan make:migration create_users_table
+```
+
+
+##### (step:02)
+Migrations create 
+```php
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('age');
+            $table->string('city');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('users');
+    }
+};
+
+```
+
+##### (step:03)
+Model create
+```php
+php artisan make:model user
+```
+
+
+##### (step:04)
+Seeder create
+```php
+php artisan make:seeder UserSeeder
+```
+
+
+##### (step:04)
+Controller Create
+
+```php
+
+```
 
 
 
 
 
+##### (step:05)
+Routes Create
+
+```php
+
+```
 
 
+##### (step:06)
+View Create
 
+```php
 
-
-
-
-
-
-
-
-
-
-
-
+```
 
 
 
