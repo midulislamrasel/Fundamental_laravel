@@ -1012,6 +1012,19 @@ return new class extends Migration
 Model create
 ```php
 php artisan make:model user
+//--------------------------------------//
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class user extends Model
+{
+    use HasFactory;
+}
+
 ```
 
 
@@ -1019,13 +1032,52 @@ php artisan make:model user
 Seeder create
 ```php
 php artisan make:seeder UserSeeder
+//----------------------------------//
+namespace Database\Seeders;
+
+use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+class userSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        //
+        user::created([
+            'name'=>'midul',
+            'email'=>'miduli@gmail.com',
+            'age'=>'25',
+            'city'=>'Dhaka'
+        ]);
+    }
+}
+
+
 ```
 
 
 ##### (step:04)
 Controller Create
-
 ```php
+php artisan make:controller UserController
+//----------------------------------------//
+
+
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class UserController extends Controller
+{
+    public function showUsers()
+    {
+        $users = DB::table('users')->get();
+        return view('allusers', ['data' => $users]);
+    }
+}
 
 ```
 
@@ -1037,7 +1089,11 @@ Controller Create
 Routes Create
 
 ```php
+Route::get('/', [UserController::class,'showUsers']);
 
+
+//-------Singel User Detels--------//
+Route::get('/user/{id}', [UserController::class, 'singleUser'])->name('view.user');
 ```
 
 
@@ -1045,7 +1101,37 @@ Routes Create
 View Create
 
 ```php
+<table class="table table-bordered table-striped">
+              <tr>
+                   <th>ID</th>
+                   <th>Name</th>
+                   <th>Email</th>
+                   <th>Age</th>
+                   <th>City</th>
+                   <th>View</th>
+               </tr>
 
+        @foreach( $data as $id => $user)
+              <tr>
+                 <td>{{$user ->id}}</td>
+                 <td>{{$user ->name}}</td>
+                 <td>{{$user ->email}}</td>
+                 <td>{{$user ->age}}</td>
+                 <td>{{$user ->city}}</td>
+                 <td><a href="{{route('view.user',$user ->id)}}" class="btn btn-primary btn-sm">View</a></td>
+              </tr>
+       @endforeach
+
+ </table>
+
+
+//--------------singel User-----------//
+@foreach($users as $id=>$user)
+    <h3>Name:{{$user->name}}</h3>
+    <h3>Email:{{$user->email}}</h3>
+    <h3>age:{{$user->age}}</h3>
+    <h3>city:{{$user->city}}</h3>
+@endforeach
 ```
 
 
