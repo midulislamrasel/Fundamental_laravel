@@ -1395,14 +1395,28 @@ DB::table('users')
 
 
 
-##### (Delete)
+#### (Delete) or Truncate
+##### Delete
 ```php
 DB::table('users')
    ->where('id',1)
    ->delete();
 ```
-##### (step:01)
 
+##### Truncate
+ // delete all user and resate user id 1 
+```php
+DB::table('users')
+   ->where('id',1)
+   ->truncate();
+```
+
+
+
+
+
+#### Delete
+##### (step:01)
 CONTROLLER
 ```php
     public function deleteUser ( string $id)
@@ -1453,7 +1467,6 @@ view
                     </table>
 
 ```
-
 
 
 
