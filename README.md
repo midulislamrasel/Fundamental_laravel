@@ -1270,10 +1270,62 @@ DB::table('users')->insert([
  'name'=>'Midul Islam',
  'email'=>'midul@gamil.com'
 ])
+
+
+/----multipul add Data-----/
+
+DB::table('users')->insert([
+[
+ 'name'=>'Midul Islam',
+ 'email'=>'midul@gamil.com'
+],
+[
+ 'name'=>'Rasel Islam',
+ 'email'=>'rasel@gamil.com'
+]
+])
 ```
 
 
+##### inserOringore
+```php
+$user = DB::table('user') 
+       ->insertOringore([
+           'name':'Rasel',
+           'email': 'rasel@gamil.com'
+       ])
+
+      if($user){
+        echo "<h1> Data Successfull Added.</h1>"
+      }else{
+       echo "<h1> Data Not Added.</h1>"
+      }
+```
+##### upsert
+```php
+$user = DB::table('user') 
+       ->upsert([
+           'name':'Rasel',
+           'email': 'rasel@gamil.com',
+           'city': 'Dhaka'
+       ],
+      ['email'],
+      ['city']
+    /----only update city -----/
+      )
+
+      if($user){
+        echo "<h1> Data Successfull Added.</h1>"
+      }else{
+       echo "<h1> Data Not Added.</h1>"
+      }
+```
+
+
+
+
 ##### (Update)
+
 ```php
 DB::table('users')
     ->where('id',1)
@@ -1283,17 +1335,124 @@ DB::table('users')
 
 ```
 
+
+###### updateOrInsert
+```php
+
+DB::table('users')
+    ->where('id',1)
+    ->updateOrInsert(
+    [
+     'email'=>'midul@gamil.com'
+     'name'=>'midul'
+    ],
+    [
+    'age':33
+    ]
+)
+
+```
+
+###### increment
+```php
+DB::table('users')
+    ->where('id',1)
+    ->increment('age')
+     /--->increment('age',5)-----/
+```
+
+
+###### increment
+```php
+DB::table('users')
+    ->where('id',1)
+    ->increment('age' ['city'=>'Cox Buzzar'])
+     /--->increment('age',5)-----/
+```
+
+
+###### incrementEach
+```php
+DB::table('users')
+    ->where('id',1)
+    ->incrementEach(
+[
+'age'=>3,
+'vores'=>1,
+]
+)
+
+```
+
+
+###### decrement
+```php
+DB::table('users')
+    ->where('id',1)
+    ->decrement('age')
+     /---  decrement('age',5)  -----/
+```
+
+
+
 ##### (Delete)
 ```php
 DB::table('users')
    ->where('id',1)
    ->delete();
 ```
+##### (step:01)
 
+CONTROLLER
+```php
+    public function deleteUser ( string $id)
+    {
+        $user = DB::table('users')
+            ->where('id', $id)
+            ->delete();
 
-##### (step:04)
-##### (step:05)
-##### (step:06)
+        if ($user) {
+            echo "<h1>Delete Successfully</h1>";
+        }else{
+            echo "<h1>Delete Failed</h1>";
+        }
+        if($user){
+            return redirect()->route('home');
+        }
+    }
+```
+
+##### (step:02)
+ROUTE
+```php
+Route::get('/delete/{id}', [UserController::class, 'deleteUser'])->name('delete.user');
+```
+
+##### (step:02)
+view
+```php
+<h2 class="text-center">All USERS LIST</h2>
+                    <table class="table table-bordered table-striped">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>View | Delete</th>
+                            </tr>
+
+                        @foreach( $data as $id => $user)
+                                    <tr>
+                                        <td>{{$user ->id}}</td>
+                                        <td>{{$user ->name}}</td>
+                                        <td>
+                                            <a href="{{route('view.user',$user ->id)}}" class="btn btn-primary btn-sm">View</a>
+                                            <a href="{{route('delete.user',$user ->id)}}" class="btn btn-danger btn-sm">Delete</a>
+                                        </td>
+
+                                    </tr>
+                            @endforeach
+                    </table>
+
+```
 
 
 
