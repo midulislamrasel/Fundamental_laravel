@@ -1132,11 +1132,126 @@ View Create
     <h3>age:{{$user->age}}</h3>
     <h3>city:{{$user->city}}</h3>
 @endforeach
+
 ```
 
 
 
+same query
+```php
 
+$users = DB::table('users')
+        ->where('city','goa')
+        ->where('age', '>', 20)
+        ->get()
+
+//-----------//
+
+$users = DB::table('users')
+        ->where([
+               ['city', '=' , 'Dhaka'],
+               ['age', '>', 20]
+           ])
+        ->get()
+
+//--------------//
+$users = DB::table('users')
+        ->where('city','goa')
+        ->orWhere('age', '>', 20)
+        ->get()
+
+
+//--------------//
+$users = DB::table('users')
+        ->where('city','goa')
+        ->orWhere('age', [18,20])
+        ->get()
+
+
+//--------------//
+$users = DB::table('users')
+        ->whereIn(city',['Dilli','goa'])
+        ->get()
+
+
+//--------------//
+$users = DB::table('users')
+        ->whereNotIn(city',['Dilli','goa'])
+        ->get()
+
+
+//--------------//
+$users = DB::table('users')
+        ->whereNotIn('city',['Dilli','goa'])
+        ->get()
+
+
+
+//--------------//
+$users = DB::table('users')
+        ->orWhereIn(city',['Dilli','goa'])
+        ->get()
+
+
+//--------------//
+$users = DB::table('users')
+        ->whereNull(city',['Dilli','goa'])
+        ->get()
+
+
+//--------------//
+$users = DB::table('users')
+        ->whereNotNull(city',['Dilli','goa'])
+        ->get()
+
+
+
+//--------------//
+$users = DB::table('users')
+        ->whereDate('create_at','2023-06-28'])
+        ->get()
+
+
+//--------------//
+$users = DB::table('users')
+        ->whereMonth('create_at','6'])
+        ->get()
+
+
+//--------------//
+$users = DB::table('users')
+        ->whereMonth('create_at','6'])
+        ->get()
+
+
+//--------------//
+$users = DB::table('users')
+        ->whereDay('create_at','26'])
+        ->get()
+
+
+//--------------//
+$users = DB::table('users')
+        ->whereYear('create_at','2024'])
+        ->get()
+
+
+//--------------//
+$users = DB::table('users')
+        ->whereTime('create_at','08:01:34'])
+        ->get()
+
+
+
+
+
+//-----------------------------//
+if(DB::table('orders')->where('id',1)->exists()){
+//.........
+}
+
+
+```
 
 
 
