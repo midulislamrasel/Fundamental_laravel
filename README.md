@@ -960,8 +960,7 @@ Query Builder  -> DB::table('users')->where('city','=','Dhaka')->orwhere('age','
 
 
 
-
-### Queray Builder 
+### Query Builder CRUD ->READ
 
 ##### (step:01)
 Database create 
@@ -1247,11 +1246,69 @@ $users = DB::table('users')
 
 //-----------------------------//
 if(DB::table('orders')->where('id',1)->exists()){
-//.........
+  ........
 }
 
 
 ```
+
+
+
+
+
+### Query Builder CRUD -> CREARE , UPDATE  AND DELETE
+
+
+first on controller fille add 
+```php
+ use illminate\Support\Facades\DB;
+```
+
+##### (Add New Record)
+```php
+DB::table('users')->insert([
+ 'name'=>'Midul Islam',
+ 'email'=>'midul@gamil.com'
+])
+```
+
+
+##### (Update)
+```php
+DB::table('users')
+    ->where('id',1)
+    ->update([
+ 'email'=>'midul@gamil.com'
+])
+
+```
+
+##### (Delete)
+```php
+DB::table('users')
+   ->where('id',1)
+   ->delete();
+```
+
+
+##### (step:04)
+##### (step:05)
+##### (step:06)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
