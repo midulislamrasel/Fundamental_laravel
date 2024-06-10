@@ -1584,8 +1584,9 @@ class UserController extends Controller
 }
 ```
 
-### Route
 
+
+### Route
 ```php
 <?php
 
@@ -1610,8 +1611,8 @@ Route::controller(UserController::class)->group(function () {
 Route::view('newuser', '/adduser');
 ```
 
-### All USER
 
+### All USER
 ```php
         <div class="container">
             <div class="row">
@@ -1643,8 +1644,8 @@ Route::view('newuser', '/adduser');
         </div>
 ```
 
-### Singel USER
 
+### Singel USER
 ```php
 <h1>USER DETAIL</h1>
 
@@ -1657,8 +1658,9 @@ Route::view('newuser', '/adduser');
 
 ```
 
-### INSER USER
 
+
+### INSER USER
 ```php
     <div class="container">
         <div class="row">
@@ -1693,8 +1695,9 @@ Route::view('newuser', '/adduser');
     </div>
 ```
 
-### UPDARE USER
 
+
+### UPDARE USER
 ```php
     <div class="container">
         <div class="row">
@@ -1731,7 +1734,157 @@ Route::view('newuser', '/adduser');
 
 
 
+<img src="https://miro.medium.com/v2/resize:fit:720/format:webp/0*ZSZITzjdvwjuIXWo.png" alt="">
 
+### Pagination Methods
+#### Paginate()
+```php
+DB:table('users')->paginate(5)
+```
+
+##### controller Fille
+```php
+        public function showUsers()
+    {
+        $users = DB::table('users')
+            ->paginate(5)
+        return view('allusers', ['data' => $users]);
+    }
+```
+
+##### views/alluser
+```php
+<div>
+{{$data->link()}}
+</div>
+```
+
+##### first the way
+-   First, we need to turn off the tabloid sys and then to disable bootstrap we need to make some changes to the file => app/providers/appserviceProvider
+
+```php
+use Illuminate\Pagination\Paginator;
+public function boot(): void
+{
+    Paginator::useBootstrapFive();
+    Paginator::useBootstrapFour();
+}
+```
+
+##### Secend the way
+```php
+<div>
+{{$data->link('pagination::bootstrap-5')}}
+</div>
+```
+
+
+
+<!-- ======SimplePaginate========== -->
+###### simplePaginate()
+
+```php
+DB::table('users')->simplePaginate(5)
+```
+
+##### controller Fille
+```php
+        public function showUsers()
+    {
+        $users = DB::table('users')
+            ->simplePaginate(5)
+        return view('allusers', ['data' => $users]);
+    }
+```
+
+##### views/alluser
+```php
+<div>
+{{$data->link()}}
+</div>
+
+```
+
+<!-- ================ -->
+
+######<img src="https://miro.medium.com/v2/resize:fit:720/format:webp/0*ZSZITzjdvwjuIXWo.png" alt="">
+
+### Pagination Methods
+#### Paginate()
+```php
+DB:table('users')->paginate(5)
+```
+
+
+##### controller Fille
+```php
+        public function showUsers()
+    {
+        $users = DB::table('users')
+            ->paginate(5)
+        return view('allusers', ['data' => $users]);
+    }
+```
+
+
+##### views/alluser
+```php
+<div>
+{{$data->link()}}
+</div>
+```
+
+
+##### first the way
+-   First we need to turn off the tabloid sys and then to disable bootstrap we need to make some changes to the file => app/providers/appserviceProvider
+
+```php
+use Illuminate\Pagination\Paginator;
+public function boot(): void
+{
+    Paginator::useBootstrapFive();
+    Paginator::useBootstrapFour();
+}
+```
+
+##### Secend the way
+```php
+<div>
+{{$data->link('pagination::bootstrap-5')}}
+</div>
+```
+
+<!-- ======SimplePaginate========== -->
+
+###### simplePaginate()
+```php
+DB::table('users')->simplePaginate(5)
+```
+
+##### controller Fille
+```php
+        public function showUsers()
+    {
+        $users = DB::table('users')
+            ->simplePaginate(5)
+        return view('allusers', ['data' => $users]);
+    }
+```
+
+
+##### views/alluser
+```php
+<div>
+{{$data->link()}}
+</div>
+
+```
+
+<!-- ======cursorPaginate========== -->
+###### cursorPaginate()
+```php
+DB::table('users')->orderBy('id')->cursorPaginate(5)
+```
 
 
 
