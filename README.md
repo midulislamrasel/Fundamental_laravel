@@ -1471,7 +1471,8 @@ view
 
 
 
-## CRUD -> From
+<img src="https://www.codestoresolutions.com/wp-content/uploads/2023/08/crud.webp" alt="">
+
 
 #### Controller
 
