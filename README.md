@@ -1471,6 +1471,264 @@ view
 
 
 
+## CRUD -> From
+
+#### Controller
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class UserController extends Controller
+{
+
+//================Show All User==============
+    public function showUsers()
+    {
+        $users = DB::table('users')->get();
+        return view('allusers', ['data' => $users]);
+    }
+
+
+
+//=============Singel User Find================
+    public  function singleUser(string $id)
+    {
+        $users = DB::table('users')->where('id', $id)->get();
+        return view('user', ['users' => $users]);
+    }
+
+
+
+//==================Inser User===================
+    public function addUser(Request $req)
+    {
+        $user = DB::table('users')
+            ->insert(
+                [
+                    'name' => $req->username,
+                    'email' => $req->useremail,
+                    'age' => $req->userage,
+                    'city' => $req->usercity,
+                    'remember_token' => $req->usertoken
+                ]
+            );
+
+        if ($user) {
+            return redirect()->route('home');
+            // echo "<h1> Data Successfully</h1>";
+        } else {
+            echo "<h1> Data Not Add</h1>";
+        }
+    }
+
+
+
+
+    // =========Update page================
+    //---------Find Data and fild from----------
+    public function updatepage(string $id)
+    {
+        // $users = DB::table('users')->where('id', $id)->get();
+        $users = DB::table('users')->find($id);
+        return view('updateuser', ['data' => $users]);
+    }
+
+
+
+
+    //================Update From==============
+    public function update(Request $req, $id)
+    {
+        $user = DB::table('users')
+            ->where('id', $id)
+            ->update([
+                'name' => $req->username,
+                'email' => $req->useremail,
+                'age' => $req->userage,
+                'city' => $req->usercity,
+                'remember_token' => $req->usertoken
+            ]);
+
+        if ($user) {
+            return redirect()->route('home');
+        } else {
+            echo "<h1>Update Failed</h1>";
+        }
+    }
+
+
+
+
+//================Delete======================
+    public function deleteUser(string $id)
+    {
+        $user = DB::table('users')
+            ->where('id', $id)
+            ->delete();
+
+        if ($user) {
+            echo "<h1>Delete Successfully</h1>";
+        } else {
+            echo "<h1>Delete Failed</h1>";
+        }
+        if ($user) {
+            return redirect()->route('home');
+        }
+    }
+}
+```
+
+### Route
+
+```php
+<?php
+
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+
+Route::controller(UserController::class)->group(function () {
+
+    Route::get('/', 'showUsers')->name('home');
+
+    Route::get('/user/{id}', 'singleUser')->name('view.user');
+
+    Route::post('/add', 'addUser')->name('addUser');
+
+    Route::post('/update/{id}', 'update')->name('update.user');
+
+    Route::get('/updatepage/{id}', 'updatepage')->name('update.page');
+
+    Route::get('/delete/{id}', 'deleteUser')->name('delete.user');
+});
+
+Route::view('newuser', '/adduser');
+```
+
+### All USER
+
+```php
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h2 class="text-center">All USERS LIST</h2>
+                    <a href="/newuser" class="btn btn-success btn-sm mb-3">Add New</a>
+                    <table class="table table-bordered table-striped">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>View | Delete</th>
+                            </tr>
+
+                        @foreach( $data as $id => $user)
+                                    <tr>
+                                        <td>{{$user ->id}}</td>
+                                        <td>{{$user ->name}}</td>
+                                        <td>
+                                            <a href="{{route('view.user',$user ->id)}}" class="btn btn-primary btn-sm">View</a>
+                                            <a href="{{route('delete.user',$user ->id)}}" class="btn btn-danger btn-sm">Delete</a>
+                                            <a href="{{route('update.page',$user ->id)}}" class="btn btn-info btn-sm">Update</a>
+                                        </td>
+
+                                    </tr>
+                            @endforeach
+                    </table>
+                </div>
+            </div>
+        </div>
+```
+
+### Singel USER
+
+```php
+<h1>USER DETAIL</h1>
+
+@foreach($users as $id=>$user)
+    <h3>Name:{{$user->name}}</h3>
+    <h3>Email:{{$user->email}}</h3>
+    <h3>age:{{$user->age}}</h3>
+    <h3>city:{{$user->city}}</h3>
+@endforeach
+
+```
+
+### INSER USER
+
+```php
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <h1>Add new user</h1>
+                <form action="{{route('addUser')}}" method="POST">
+                    @csrf
+                    <div class="mt-3">
+                        <lable class ="form-label">Name</lable>
+                        <input type="text" class="form-control" name="username" id="">
+                    </div>
+                    <div class="mt-3">
+                        <lable class ="form-label">Email</lable>
+                        <input type="email" class="form-control" name="useremail" id="">
+                    </div>
+                    <div class="mt-3">
+                        <lable class ="form-label">Age</lable>
+                        <input type="number" class="form-control" name="userage" id="">
+                    </div>
+                    <div class="mt-3">
+                        <lable class ="form-label">city</lable>
+                        <input type="text" class="form-control" name="usercity" id="">
+                    </div>
+                    <div class="mt-3">
+                        <lable class ="form-label">Token</lable>
+                        <input type="text" class="form-control" name="usertoken" id="">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+```
+
+### UPDARE USER
+
+```php
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <h1>Update user Data</h1>
+                <form action="{{route('update.user', $data->id)}}" method="POST">
+                    @csrf
+                    <div class="mt-3">
+                        <lable class ="form-label">Name</lable>
+                        <input type="text" value="{{$data->name}}" class="form-control" name="username" id="">
+                    </div>
+                    <div class="mt-3">
+                        <lable class ="form-label">Email</lable>
+                        <input type="email" value="{{$data->email}}"  class="form-control" name="useremail" id="">
+                    </div>
+                    <div class="mt-3">
+                        <lable class ="form-label">Age</lable>
+                        <input type="number" value="{{$data->age}}" class="form-control" name="userage" id="">
+                    </div>
+                    <div class="mt-3">
+                        <lable class ="form-label">city</lable>
+                        <input type="text" value="{{$data->city}}" class="form-control" name="usercity" id="">
+                    </div>
+                    <div class="mt-3">
+                        <lable class ="form-label">Token</lable>
+                        <input type="text" value="{{$data->remember_token}}" class="form-control" name="usertoken" id="">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+```
+
+### DELETE USER
 
 
 
