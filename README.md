@@ -1471,7 +1471,7 @@ view
 
 
 
-<img src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/273092271/original/f5cb8adcd2c0768e18282d8de88c7fa92d3a5f40/develop-crud-application-using-laravel.jpg" alt="">
+<img src="https://codewolfy.com/wp-content/uploads/laravel-application-to-perform-crud-operations-1682107778qcupf-1024x569.webp" alt="">
 
 
 #### Controller
