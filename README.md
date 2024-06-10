@@ -1474,7 +1474,7 @@ view
 <img src="https://codewolfy.com/wp-content/uploads/laravel-application-to-perform-crud-operations-1682107778qcupf-1024x569.webp" alt="">
 
 
-#### Controller
+### Controller
 
 ```php
 <?php
@@ -1729,7 +1729,7 @@ Route::view('newuser', '/adduser');
     </div>
 ```
 
-### DELETE USER
+
 
 
 
