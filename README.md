@@ -1471,7 +1471,7 @@ view
 
 
 
-<img src="https://www.codestoresolutions.com/wp-content/uploads/2023/08/crud.webp" alt="">
+<img src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/273092271/original/f5cb8adcd2c0768e18282d8de88c7fa92d3a5f40/develop-crud-application-using-laravel.jpg" alt="">
 
 
 #### Controller
