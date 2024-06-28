@@ -1805,8 +1805,13 @@ DB::table('users')->simplePaginate(5)
 
 ```
 
+----------------test--------------
+```php
+<div>
+{{$data->link()}}
+</div>
 
-
+```
 
 
 
