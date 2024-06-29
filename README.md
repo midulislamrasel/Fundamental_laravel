@@ -1797,13 +1797,7 @@ DB::table('users')->simplePaginate(5)
     }
 ```
 
-##### views/alluser
-```php
-<div>
-{{$data->link()}}
-</div>
 
-```
 
 
 
