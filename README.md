@@ -1737,7 +1737,7 @@ Route::view('newuser', '/adduser');
 <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/0*ZSZITzjdvwjuIXWo.png" alt="">
 
 ### Pagination Methods
-#### Paginate()
+# Paginate()
 ```php
 DB:table('users')->paginate(5)
 ```
@@ -1781,7 +1781,7 @@ public function boot(): void
 
 
 <!-- ======SimplePaginate========== -->
-###### simplePaginate()
+# simplePaginate()
 
 ```php
 DB::table('users')->simplePaginate(5)
@@ -1805,13 +1805,6 @@ DB::table('users')->simplePaginate(5)
 
 ```
 
-----------------test--------------
-```php
-<div>
-{{$data->link()}}
-</div>
-
-```
 
 
 
