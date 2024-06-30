@@ -1800,8 +1800,18 @@ DB::table('users')->simplePaginate(5)
 
 
 
-# Laravel Join Table
+## Laravel : Join Table
 
+*INNER JOIN ->join()
+*LEFT JOIN ->leftJoin()
+*RIGHT JOIN ->rightJoin()
+*CROSS JOIN ->crossJoin()
+
+```php
+DB::table('students')
+->join('cities','students.city','=','cities.cid')
+->get()
+```
 
 
 
