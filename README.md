@@ -1800,6 +1800,7 @@ DB::table('users')->simplePaginate(5)
 
 
 
+# Laravel Join Table
 
 
 
