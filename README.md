@@ -1816,7 +1816,20 @@ DB::table('students')
 
 
 
+###### StudentController File
+```php
+    public function showStudent()
+    {
+        $students = DB::table('students')
+            ->join('cities', 'students.city', '=', 'cities.id')
+            ->select('students.*','cities.city_name')
+            ->where('students.email','=','admin@gmai.com')
+            ->get();
 
+        return view('welcome', compact('students'));
+    }
+
+```
 
 
 
