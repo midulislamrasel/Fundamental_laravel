@@ -1917,6 +1917,34 @@ DB::table('students')
 
 ### Raw SQL Queries
 
+##### Selects
+```php
+$student = DB::select("select name,age from students where name =  ?", ["Rasel"])
+ return $students;
+```
+##### insert
+```php
+$student = DB::insert("insert into student (name,email,age,city) values(>?,?,?,?,)",["Ram Kumar","ram@gmail.com",20,2]);
+ return $students;
+```
+
+
+##### Update
+```php
+$student = DB::update("update students set email='test@gmail.com' where id = ? ", [11]);
+ return $students;
+```
+
+##### Delete
+
+```php
+$student = DB::delete("delete from students  where id = ? ", [11]);
+ return $students;
+```
+
+
+### Form Validation
+
 
 
 
