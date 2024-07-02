@@ -1833,7 +1833,7 @@ DB::table('students')
 
 
 
-#### Union()Method
+#### Union() Method
 ```php
     $students = DB::table("students")
 
@@ -1843,6 +1843,79 @@ DB::table('students')
                 ->get()
 ```
 
+#### Union Method + Join Method
+
+```php
+
+    $lecturers = DB::table("lecturers")
+                    ->select('name','email','city_name')
+                    ->join('cities','lecturers.city', '=' , 'cities.id')
+
+    $students = DB::table("students")
+                ->union($students)
+                ->select('name','email','city_name')
+                ->get()
+
+    return $students;
+```
+
+#### Where Method
+
+```php
+
+    $lecturers = DB::table("lecturers")
+                    ->select('name','email','city_name')
+                    ->join('cities','lecturers.city', '=' , 'cities.id')
+                    ->where('city_name','=','Dhaka')
+
+        return  $lecturers
+;
+```
+
+#### When Method
+
+```php
+
+    $students = DB::table("students")
+                   ->when(true,function($query){
+                        $query->where('age','>',20)
+                   })
+                    ->get()
+
+            return $students
+
+```
+
+```php
+
+    $test = false
+    $students = DB::table("students")
+                   ->when($test,function($query){
+                        $query->where('age','>',20)
+                   },function($query){
+                    $query->where('age','<',20)
+                   })
+                    ->get()
+
+            return $students
+```
+
+#### chunk Method
+
+```php
+    $students = DB::table("students")
+                   ->orderBy('id')
+                   ->chunk(3,function($students){
+                        foreach($students as student){
+                            echo $student->name
+                        }
+                   });
+                    ->get()
+
+            return $students
+```
+
+### Raw SQL Queries
 
 
 
