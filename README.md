@@ -1802,10 +1802,10 @@ DB::table('users')->simplePaginate(5)
 
 ## Laravel : Join Table
 
-*INNER JOIN ->join()
-*LEFT JOIN ->leftJoin()
-*RIGHT JOIN ->rightJoin()
-*CROSS JOIN ->crossJoin()
+INNER JOIN ->join()
+LEFT JOIN ->leftJoin()
+RIGHT JOIN ->rightJoin()
+CROSS JOIN ->crossJoin()
 
 ```php
 DB::table('students')
@@ -1815,7 +1815,7 @@ DB::table('students')
 
 
 
-
+### INNER JOIN ->join()
 ###### StudentController File
 ```php
     public function showStudent()
@@ -1831,6 +1831,17 @@ DB::table('students')
 
 ```
 
+
+
+#### Union()Method
+```php
+    $students = DB::table("students")
+
+
+    $lecturers = DB::table("lecturers")
+                ->union($students)
+                ->get()
+```
 
 
 
