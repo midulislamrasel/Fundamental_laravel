@@ -1943,7 +1943,7 @@ $student = DB::delete("delete from students  where id = ? ", [11]);
 ```
 
 
-### Form Validation
+## Form Validation
 
 
 ##### app/Http/Controllers/FormController.php
@@ -2092,7 +2092,7 @@ Route::post('users/create', [ FormController::class, 'store' ])->name('users.sto
 
 
 
-#### Form Request Validation 
+## Form Request Validation 
 
 ###### artisan commned
 ```php
@@ -2171,7 +2171,7 @@ public function store(StoreUserRequest $request)
 
 
 
-### Custom validation  - Rule Objects
+## Custom validation  - Rule Objects
 ##### set 01 aritsan commnect
 ```php
     php aritsan make:rule Uppercase
