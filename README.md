@@ -1946,7 +1946,7 @@ $student = DB::delete("delete from students  where id = ? ", [11]);
 ### Form Validation
 
 
-#### app/Http/Controllers/FormController.php
+##### app/Http/Controllers/FormController.php
 
 ```php 
 namespace App\Http\Controllers;
@@ -1996,7 +1996,7 @@ class FormController extends Controller
 
 
 
-#### routes/web.php
+##### routes/web.php
 
 ```php
 use Illuminate\Support\Facades\Route;
@@ -2006,7 +2006,7 @@ Route::get('users/create', [ FormController::class, 'create' ]);
 Route::post('users/create', [ FormController::class, 'store' ])->name('users.store');
 ```
 
-#### resources/views/createUser.blade.php
+##### resources/views/createUser.blade.php
 ```php
 <!DOCTYPE html>
 <html>
@@ -2098,6 +2098,102 @@ Route::post('users/create', [ FormController::class, 'store' ])->name('users.sto
 </body>
 </html>
 ```
+
+
+
+#### Form Request Validation 
+
+##### artisan commned
+```php
+php artisan make:request UserRequest
+```
+
+###### app/Http/Requests/StoreUserRequest.php:
+```php
+class StoreUserRequest extends FormRequest
+{
+    public function authorize()
+    {
+        return Gate::allows('user_create');
+    }
+ 
+    public function rules()
+    {
+        return [
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'password' => 'required',
+        ];
+    }
+   public function messages(){
+     return[
+          "username.required"=>'user Name is Required !',
+          "useremail.required"=>'User Email is Required !',
+          "useremail.email"=>'Enter the correct emial address!',
+          ]
+     }
+
+
+
+//first error show than secend error show
+
+protected $stopOnFirstFailure = true
+
+
+
+
+//used too Larvel error message
+//attributes add 
+  public function attributes(){
+      return [
+                'username'=>'User Name',
+                'useremail'=>'User Email',
+                'userpassword'=>'User Password',
+           ]
+      }
+
+
+
+
+//Used too form attributes uppercase and lowrcase
+       protected function prepareForValidation():void{
+                 $this->merge([
+                 'username'=>strtoupper($this->username),
+                 ])
+             }
+   
+}
+```
+
+#### controllar Fille
+```php
+public function store(StoreUserRequest $request) 
+{
+
+ 
+ return $request->all();
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
