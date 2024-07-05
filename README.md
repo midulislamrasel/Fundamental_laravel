@@ -1958,21 +1958,12 @@ use Illuminate\Http\RedirectResponse;
      
 class FormController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create(): View
     {
         return view('createUser');
     }
           
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
@@ -2103,7 +2094,7 @@ Route::post('users/create', [ FormController::class, 'store' ])->name('users.sto
 
 #### Form Request Validation 
 
-##### artisan commned
+###### artisan commned
 ```php
 php artisan make:request UserRequest
 ```
@@ -2165,7 +2156,7 @@ protected $stopOnFirstFailure = true
 }
 ```
 
-#### controllar Fille
+###### controllar Fille
 ```php
 public function store(StoreUserRequest $request) 
 {
@@ -2175,6 +2166,64 @@ public function store(StoreUserRequest $request)
 }
 
 ```
+
+
+
+
+
+### Custom validation  - Rule Objects
+##### set 01 aritsan commnect
+```php
+    php aritsan make:rule Uppercase
+```
+
+
+##### set 02 app/Rules/Uppercase.php
+```php
+
+namespace App\Rules;
+use Illuminate\Contracts\Validation\InvokableRule;
+
+
+class Uppercase implements ValidationRule{
+    public function validation(string $attribute, mixed $value, Closure $fail):void
+    {
+           if (strtoupper($value) !== $value) {
+           $fail('The :attribute must be uppercase.');
+       }
+    }
+}
+```
+
+
+#####  set 03 app/Http/Controllers/FormController.php
+
+```php 
+namespace App\Http\Controllers;
+      
+use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+
+use App\Rules\Uppercase;
+     
+class FormController extends Controller
+{
+          
+    public function store(Request $request): RedirectResponse
+    {
+        $validatedData = $request->validate([
+                'name' => ['required',new Uppercase],
+            ])
+      return $req->all()
+    }
+
+}
+
+
+
+
 
 
 
