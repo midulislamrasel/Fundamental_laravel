@@ -2274,6 +2274,7 @@ Route::resource('users', UserController::class);
 
 
 ##### (step 01 ) Model and Controller file create
+
 ````php
 php artisan make:model user --controller
 
@@ -2291,7 +2292,7 @@ class UserController extends Controller
     {
         $users = User::all();
         return $users;
-    }
+1.     }
 }
 ````
 ##### (step 03 )Route File web route
@@ -2301,9 +2302,121 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/user',[UserController::class,'show']);
+
 ````
 
 
+##### (step 04 )view Fille 
+````php
+<body>
+        <div class="container">
+            <div class="row">
+                <div class="col-7">
+                    <table class="table table-striped table-bordered">
+                            @foreach( $users as $user)
+                            <tr>
+                                <td> {{$user->name}}</td>
+                                <td> {{$user->email}}</td>
+                                <td> {{$user->age}}</td>
+                            </tr>
+                            @endforeach
+                    </table>
+                </div>
+            </div>
+        </div>
+</body>
+````
+    
+
+##### some query
+````php
+$users ::where('city','goa')
+        ->where('age', '>', 20)
+        ->get()
+
+//-----------//
+
+$users ::where([
+               ['city', '=' , 'Dhaka'],
+               ['age', '>', 20]
+           ])
+        ->get()
+
+//--------------//
+$users::where('city','goa')
+        ->orWhere('age', '>', 20)
+        ->get()
 
 
+//--------------//
+$users::where('city','goa')
+        ->orWhere('age', [18,20])
+        ->get()
 
+
+//--------------//
+$users::whereIn(city',['Dilli','goa'])
+        ->get()
+
+
+//--------------//
+
+$users::whereNotIn(city',['Dilli','goa'])
+        ->get()
+
+
+//--------------//
+$users::whereNotIn('city',['Dilli','goa'])
+        ->get()
+
+
+//--------------//
+$users::orWhereIn(city',['Dilli','goa'])
+        ->get()
+
+
+//--------------//
+$users::whereNull(city',['Dilli','goa'])
+        ->get()
+
+
+//--------------//
+$users::whereNotNull(city',['Dilli','goa'])
+        ->get()
+
+
+//--------------//
+$users::whereDate('create_at','2023-06-28'])
+        ->get()
+
+
+//--------------//
+$users::whereMonth('create_at','6'])
+        ->get()
+
+
+//--------------//
+$users::whereMonth('create_at','6'])
+        ->get()
+
+
+//--------------//
+$users::whereDay('create_at','26'])
+        ->get()
+
+
+//--------------//
+$users::whereYear('create_at','2024'])
+        ->get()
+
+
+//--------------//
+$users::whereTime('create_at','08:01:34'])
+        ->get()
+
+
+//-----------------------------//
+if(DB::table('orders')->where('id',1)->exists()){
+}
+
+````
