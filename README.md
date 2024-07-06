@@ -2270,9 +2270,38 @@ Route::resource('users', UserController::class);
 ```
 
 
+### Eloquent ORM
 
 
+##### (step 01 ) Model and Controller file create
+````php
+php artisan make:model user --controller
 
+````
+##### (step 02 )Controller add Models File
+````php
+namespace App\Http\Controllers;
+use App\Models\user;
+
+use Illuminate\Http\Request;
+
+class UserController extends Controller
+{
+    public function show()
+    {
+        $users = User::all();
+        return $users;
+    }
+}
+````
+##### (step 03 )Route File web route
+````php
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+
+
+Route::get('/user',[UserController::class,'show']);
+````
 
 
 
