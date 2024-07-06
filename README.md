@@ -2220,24 +2220,54 @@ class FormController extends Controller
     }
 
 }
+```
 
 
 
 
 
 
+## Resource Controller 
+
+##### (stp: 01)resource controller create
+```php
+php artisan make:controller UserController --resource
+```
+
+###### show all route 
+ ```php
+php artisan route:list --name=users
+```
+
+##### (stp: 02)route file web route
+```php 
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 
 
+Route::resource('users', UserController::class);
 
 
+// route name change index name now alluser
+//Route::resource('users', UserController::class)->names([
+//   'index' => 'users.allUser',
+//    'show' => 'users.view',
+//]);
 
 
+// only used index , store, update route show other route hide
+//Route::resource('users', UserController::class)->only(
+//    ['index', 'store', 'update']
+//);
 
 
+//// only used index', 'store hide and other route show 
+//Route::resource('users', UserController::class)->except(
+//    ['index', 'store']
+//);
 
-
-
+```
 
 
 
