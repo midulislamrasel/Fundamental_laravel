@@ -2277,8 +2277,13 @@ Route::resource('users', UserController::class);
 
 ````php
 php artisan make:model user --controller
-
 ````
+
+###### model controller and resource
+````php
+php artisan make:model user --controller --resource
+````
+
 ##### (step 02 )Controller add Models File
 ````php
 namespace App\Http\Controllers;
