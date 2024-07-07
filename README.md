@@ -2425,3 +2425,399 @@ if(DB::table('orders')->where('id',1)->exists()){
 }
 
 ````
+
+
+
+
+## RESOURCE CRUD
+##### setp-1
+```php
+php artisan make:controller UserController --resource
+```
+
+
+###### route chack
+```php 
+php artisan route:list --name=user
+```
+
+
+##### setp-2 (Models File)
+```php
+       namespace App\Models;
+       
+       use Illuminate\Database\Eloquent\Factories\HasFactory;
+       use Illuminate\Database\Eloquent\Model;
+       
+       class User extends Model
+       {
+           use HasFactory;
+           public $timestamps = false;
+       
+           protected $guarded = [];
+       }
+```
+
+
+##### setp-3 (Web Route File)
+```php
+      use App\Http\Controllers\UserController;
+      use Illuminate\Support\Facades\Route;
+      
+      Route::resource('/users', UserController::class);
+```
+
+##### setp-4 (Controller File)
+```php
+        namespace App\Http\Controllers;
+        
+        use App\Models\User;
+        use Illuminate\Http\Request;
+        
+        class UserController extends Controller
+        {
+        
+            //=====Display a listing of the resource=======
+        
+            public function index()
+            {
+                $users = User::all();
+                return view('home', compact('users'));
+            }
+        
+            //==========Show the form for creating a new resource.========
+        
+            public function create()
+            {
+                return view('adduser');
+            }
+        
+            //==========Store a newly created resource in storage.===========
+            public function store(Request $request)
+            {
+                //=======Validate From=========
+                $request->validate([
+                    'username' => 'required|alpha',
+                    'useremail' => 'required|email',
+                    'userage' => 'required|numeric',
+                    'usercity' => 'required|alpha',
+                ]);
+        
+        
+                //----------- FIRST METHOD --------------
+                // $user = new User;
+        
+                // $user->name = $request->username;
+                // $user->email = $request->useremail;
+                // $user->age = $request->userage;
+                // $user->city = $request->usercity;
+        
+                // $user->save();
+        
+        
+        
+                //------------- Second METHOD ---------------
+                // (1 setp) Models File add ( protected $guarded = []; )
+        
+                User::Create([
+                    'name' => $request->username,
+                    'email' => $request->useremail,
+                    'age' => $request->userage,
+                    'city' => $request->usercity
+        
+                ]);
+        
+                return redirect()->route('users.index')->with('status', 'New User Successfully');
+            }
+        
+            //===========Display the specified resource.=============
+        
+            public function show(string $id)
+            {
+                $users = User::find($id);
+                return view('viewuser', compact('users'));
+            }
+        
+            //============ Show the form for editing the specified resource.==========
+        
+            public function edit(string $id)
+            {
+                $users = User::find($id);
+                return view('updateuser', compact('users'));
+            }
+        
+            //===========Update the specified resource in storage.===================
+        
+            public function update(Request $request, string $id)
+        
+            {
+                //=======Validate From=========
+                $request->validate([
+                    'username' => 'required|alpha',
+                    'useremail' => 'required|email',
+                    'userage' => 'required|numeric',
+                    'usercity' => 'required|alpha',
+                ]);
+        
+                //----------- FIRST METHOD --------------
+                //$user = User::find($id);
+        
+                // $user->name = $request->username;
+                // $user->email = $request->useremail;
+                // $user->age = $request->userage;
+                // $user->city = $request->usercity;
+        
+                // $user->save();
+        
+                //------------- Second METHOD ---------------
+                $user = User::where('id', $id)
+                    ->update([
+                        'name' => $request->username,
+                        'email' => $request->useremail,
+                        'age' => $request->userage,
+                        'city' => $request->usercity
+                    ]);
+        
+                return redirect()->route('users.index')->with('status', 'Updata Successfully');
+            }
+        
+            //=========== Remove the specified resource from storage.===============
+        
+            public function destroy(string $id)
+            {
+                $users = User::find($id);
+                $users->delete();
+        
+                return redirect()->route('users.index')->with('status', 'Delete Successfully');
+            }
+        }
+```
+
+
+
+##### setp-5 (Views File)
+###### layout.blade.php
+```php
+     <!doctype html>
+     <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <meta name="viewport"
+               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+         <title>Document</title>
+     </head>
+     <body>
+     <div class="container">
+     <div class="mx-auto">
+         <div class="row">
+             <div class="col-12 bg-success text-center py-2">
+                <h2> Eloquent CRUD</h2>
+             </div>
+         </div>
+         <div class="row">
+             <div class="col-12 bg-warning-subtle mb-3 mt-3">
+                 <h4> @yield('title') </h4>
+             </div>
+         </div>
+     
+         <div class="row">
+             <div class="col-12">
+                 @if (session('status'))
+                     <div class="alert alert-success">
+                         {{session('status')}}
+                     </div>
+                 @endif
+             </div>
+         </div>
+     
+         <div class="row">
+             <div class="col-12">
+                 @yield('content')
+             </div>
+         </div>
+     </div>
+     </div>
+     </body>
+     </html>
+
+```
+
+
+###### home.blade.php
+```php
+@extends('layout')
+
+@section('title')
+All New User
+@endsection
+
+
+@section('content')
+    <a href="{{route('users.create')}}" class="btn btn-success btn-sm mb-3">Add New</a>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>city</th>
+            <th>View</th>
+            <th>Delete</th>
+            <th>Update</th>
+        </tr>
+        @foreach( $users as $user)
+            <tr>
+                <td> {{$user->id}}</td>
+                <td> {{$user->name}}</td>
+                <td> {{$user->email}}</td>
+                <td> {{$user->age}}</td>
+                <td> {{$user->city}}</td>
+                
+                {{-- <td><a href="{{route('user.show',$user->id )}}" class="btn btn-primary btn-sm">View</a></td>
+                <td><a href="" class="btn btn-danger btn-sm">Delete</a></td>
+                <td><a href="{{route('user.edit',$user->id)}}" class="btn btn-info btn-sm">Update</a></td> --}}
+
+                <td><a href="{{route('users.show', $user->id)}}" class="btn btn-primary btn-sm">View</a></td>
+                <td>
+                    <form action="{{route('users.destroy',$user->id)}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+                <td><a href="{{route('users.edit', $user->id)}}" class="btn btn-info btn-sm">Update</a></td>
+            </tr>
+        @endforeach
+    </table>
+@endsection
+```
+
+
+
+###### view.blade.php
+```php
+@extends('layout')
+
+@section('title')
+  User Detail
+@endsection
+
+@section('content')
+<table class="table table-striped table-bordered">
+    <tr>
+        <th width="80px">Name</th>
+        <td>{{$users->name}}</td>
+    </tr>
+    <tr>
+        <th>Email:</th>
+        <td>{{$users->email}}</td>
+    </tr>
+    <tr>
+        <th>Age:</th>
+        <td>{{$users->age}}</td>
+    </tr>
+    <tr>
+        <th>City:</th>
+        <td>{{$users->city}}</td>
+    </tr>
+
+</table>
+<a href="{{route('users.index')}}" class="btn btn-info">Back</a>
+
+@endsection
+```
+
+
+
+###### adduser.blade.php
+
+```php
+@extends('layout')
+
+@section('title')
+    Add User
+@endsection
+
+
+@section('content')
+    <form action="{{route('users.store')}}" method="POST">
+        @csrf
+        <div class="mb-3">
+            <label for="username" class="form-label">User Name</label>
+            <input type="text" class="form-control" name="username">
+        </div>
+        <div class="mb-3">
+            <label for="useremail" class="form-label">User Email</label>
+            <input type="text" class="form-control" name="useremail">
+        </div>
+        <div class="mb-3">
+            <label for="userage" class="form-label">User Age</label>
+            <input type="text" class="form-control" name="userage">
+        </div>
+        <div class="mb-3">
+            <label for="usercity" class="form-label">User City</label>
+            <input type="text" class="form-control" name="usercity">
+        </div>
+        <div class="mb-3">
+            <input type="submit" value="Save" class="btn btn-success">
+        </div>
+    </form>
+@endsection
+```
+
+
+
+
+###### updateuser.blade.php
+
+```php
+@extends('layout')
+
+@section('title')
+    Updata User Data
+@endsection
+
+
+@section('content')
+    <form action="{{route('users.update',$users->id)}}" method="POST">
+        @csrf
+        @method('PUT')
+
+        {{-- <pre>
+            @php
+                 print_r($errors->all());
+            @endphp
+        </pre> --}}
+        <div class="mb-3">
+            <label for="username" class="form-label">User Name</label>
+            <input type="text" value="{{$users->name}}" class="form-control" name="username">
+        </div>
+        <div class="mb-3">
+            <label for="useremail" class="form-label">User Email</label>
+            <input type="text" value="{{$users->email}}"  class="form-control" name="useremail">
+        </div>
+        <div class="mb-3">
+            <label for="userage" class="form-label">User Age</label>
+            <input type="text" value="{{$users->age}}"  class="form-control" name="userage">
+        </div>
+        <div class="mb-3">
+            <label for="usercity"class="form-label">User City</label>
+            <input type="text" value="{{$users->city}}" class="form-control" name="usercity">
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-success" > Save</button>
+            <a href="{{route('users.index')}}"  class="btn btn-info">Back</a>
+        </div>
+    </form>
+@endsection
+```
+
+
+
+
+
+
+
+
