@@ -2815,6 +2815,163 @@ All New User
 ```
 
 
+## Eloquent One To One Relationships 
+
+##### students table and contacts table studets table primary key contacts table forenkey create commnend
+* #### students table to contacts table
+
+````php
+$table->foreign('Stuent_id')->references('id')->on('students');
+````
+
+````php
+return $this->hasOne(Contact::class,'foreign_key','local_key');
+````
+
+
+#### step : 01
+##### Student Controller
+````php
+php artisan make:controller StudentController --resource
+````
+##### Contact Controller
+````php
+php artisan make:controller ContactController 
+````
+
+#### step : 02
+##### Student Model
+````php
+php artisan make:model Student
+````
+##### Contact Model
+````php
+php artisan make:model Contact
+````
+
+#### step : 03
+##### Route create
+````php
+Route::resource('student',StudentController::class);
+````
+
+
+
+#### step : 04
+##### Student Model File
+````php
+public function contact() {
+    return $this->hasOne(Contact::class);        
+}
+````
+
+
+
+
+#### step : 05
+##### Student Controller File
+###### import Student and contact model 
+
+###### with used find add data
+````php
+    public function index() {
+    $student = Student::with('contact')->get();
+    return $student;
+}
+````
+
+
+###### where used Student table condition
+````php
+    public function index() {
+    $student = Student::with('contact')->where('gender','F')->get();
+    return $student;
+}
+````
+
+###### withWhereHas contact table condition and students table also condition
+````php
+    public function index() {
+    $student = Student::withWhereHas('contact',function ($query){
+        $query->where('city',"Delhi")
+    })->get();
+    return $student;
+}
+````
+
+
+
+
+
+### Inverse Relationship 
+
+* ##### contacts table to students table
+
+
+
+#### step : 01
+##### Contact Controller File
+input model file
+````php
+public function show() {
+    $contacts = Contact::get();
+    return $contacts;    
+}
+````
+
+#### Relationship student table
+````php
+public function show() {
+    $contacts = Contact::with('student')->get();
+    return $contacts;    
+}
+````
+
+
+#### step : 02
+##### Route create
+````php
+Route::get('/contact',[ContactController::class,'show']);
+````
+
+
+#### step : 03
+#### contact model file
+````php
+public function student() {
+    return $this->belongsTo(Student::class);        
+}
+````
+
+
+## One to Many Relationship
+
+````php
+public function contact() {
+    return $this->hasMany(Contact::class);        
+}
+````
+
+##### Migration create and update 
+````php
+php artisan make:migration create_users_table
+
+php artisan migrate
+````
+
+
+##### Migration Relationship
+````php
+php artisan meke:migration create_users_table
+Schema::create('lists', function(Blueprint $table) {
+$table->increments('id');
+$table->string('title', 255);
+$table->integer('user_id')->unsigned();
+$table->foreign('user_id')->references('id')->on('users');
+$table->timestamps();
+});
+````
+
 
 
 
