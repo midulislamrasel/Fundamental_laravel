@@ -2814,8 +2814,25 @@ All New User
 @endsection
 ```
 
-
 ## Eloquent One To One Relationships 
+
+
+##### one show one to one relationships table view
+````php
+Users Table
++----+----------+------------------+
+| ID | Username | Email            |
++----+----------+------------------+
+| 1  | john_doe | john@example.com |
++----+----------+------------------+
+
+UserDetails Table
++--------+-------------+------------------+
+|   ID   | address       |    User_ID     |
++--------+-------------+------------------+
+| 1      | 123 Main St   |     1          |
++--------+-------------+------------------+
+````
 
 ##### students table and contacts table studets table primary key contacts table forenkey create commnend
 * #### students table to contacts table
@@ -2946,6 +2963,31 @@ public function student() {
 
 ## One to Many Relationship
 
+##### one to many relationship table used interface
+````php
+Departments Table
++--------+------------+
+| DeptID | DeptName   |
++--------+------------+
+| 1      | HR         |
+| 2      | Finance    |
+| 3      | IT         |
++--------+------------+
+
+Employees Table
++--------+-------------+--------+
+| EmpID  | EmpName     | DeptID |
++--------+-------------+--------+
+| 1      | John Doe    | 1      |
+| 2      | Jane Smith  | 1      |
+| 3      | Mike Brown  | 2      |
+| 4      | Emily Lee   | 3      |
+| 5      | Alex Green  | 2      |
++--------+-------------+--------+
+````
+
+
+
 ````php
 public function contact() {
     return $this->hasMany(Contact::class);        
@@ -2971,6 +3013,329 @@ $table->foreign('user_id')->references('id')->on('users');
 $table->timestamps();
 });
 ````
+
+
+
+## Many to Many Relationship
+````php
+Users Table          user_role Table             Roles Table
+
++----+------+        +---------+---------+       +----+------------+
+| ID | Name |        | user_id | role_id |       | ID | Roles      |
++----+------+        +---------+---------+       +----+------------+
+| 1  | John |        | 1       | 1       |       | 1  | Admin      |
+| 2  | Jane |        | 1       | 2       |       | 2  | User       |
+| 3  | Alex |        | 2       | 2       |       | 3  | Guest      |
+| 4  | Emma |        | 3       | 3       |       | 4  | Manager    |
+| 5  | Mark |        | 4       | 4       |       | 5  | Developer  |
+| 6  | Sara |        | 5       | 5       |       | 6  | Tester     |
++----+------+        | 6       | 6       |       +----+------------+
+                     +---------+---------+
+````
+
+##### One table used two foreign key
+````php
+$table->foreign('User_id')->references('id')->on('User');
+$table->foreign('Role_id')->references('id')->on('Roles');
+````
+
+
+#### step : 01
+##### all table create model file (user,role,user_role)
+
+
+#### step : 02
+#### contact model file->(Models/User.php)
+````php
+public function roles() {
+    return $this->belongsToMany(Role::class, 'user_role');        
+}
+````
+
+#### contact model file->(Models/Role.php)
+````php
+public function User() {
+    return $this->belongsToMany(User::class, 'user_role');        
+}
+````
+
+
+### step : 03
+#### controller file -> (UserController.php)
+##### Import User and Role Model file
+````php
+    user App\Model\User;
+    user App\Model\Role;
+
+    class UserController extends Controller{
+        public function index(){
+              $user = User::find(1)
+              return $user->roles
+              
+    //   -------show all data in foreach method----------
+    //           $users = User::get();
+    //           foreach ($users as $user){
+    //                echo $user->name . "<br>"
+    //                echo $user->email . "<br>"
+    //                
+    //                foreach($users->roles as $role){
+    //                    echo $role->role_name . "<br>";
+    //                }
+    //           }
+    
+            }
+}
+````
+
+#### controller file -> (RoleController.php)
+##### Import User and Role Model file
+````php
+    user App\Model\User;
+    user App\Model\Role;
+    class UserController extends Controller{
+        public function index(){
+              $user = User::find(1)
+              return $user->roles
+        }
+}
+````
+
+
+### step : 04
+#### Route
+````php
+    Route::resource('user',UserController::class);
+    Route::resource('roles',RolleController::class)
+````
+
+
+Method
+````php
+Attach()
+Detach()
+Sync()
+````
+
+##### UserController File (used to attach method)
+````php
+public function create () {
+    $user = User::find(2);
+    $roles = [1,3];
+    $user->roles()->attach($roles);
+}
+````
+
+
+
+### Has One Through Relationship
+
+````php
+Users Table
++----+------------+
+| id | name       |
++----+------------+
+| 1  | John       |
+| 2  | Jane       |
+| 3  | Mike       |
++----+------------+
+
+
+Company table
++----+--------------+---------+
+| id | name         | user_id |
++----+--------------+---------+
+| 1  | Company A    | 1       |
+| 2  | Company B    | 2       |
+| 3  | Company C    | 1       |
++----+--------------+---------+
+
+
+Phone_number table
++----+--------------+------------+
+| id | number       | company_id |
++----+--------------+------------+
+| 1  | 123-456-7890 | 1          |
+| 2  | 987-654-3210 | 2          |
+| 3  | 555-123-4567 | 1          |
++----+--------------+------------+
+````
+
+##### Migrations commands
+````php
+$table->foreign('User_id')->references('id')->on('Users');
+````
+
+
+### step:01 (Model file)
+create users,company,phone_number models file
+
+
+### step : 02
+#### contact model file->(Models/User.php)
+````php
+public function company() {
+    return $this->hasOne(company::class);        
+}
+
+
+public function companyPhoneNumber() {
+    return $this->hasOneThrough(Phone_number::class, Company::class);        
+}
+````
+
+### step:03
+##### controller file -> (RoleController.php)
+##### Import User and Company Model file
+````php
+    user App\Model\User;
+    user App\Model\Company;
+    class UserController extends Controller{
+        public function index(){
+//              $user = User::get()
+//              $user = User::with("companyPhoneNumber")->find(2);
+                $user = User::with('company')->with('companyPhoneNumber')->get()
+//              return $user;
+              
+              echo $users->name ."<br>";
+              echo $users->company->company_name . "<br>";
+              echo $users->companyPhoneNumber->number . "<br>";
+              
+              
+        }
+}
+````
+
+
+### step : 04
+#### Route
+````php
+    Route::resource('user',UserController::class);
+    
+````
+
+
+### Has One of Many Relationship
+```php
+customers Table
++----+---------+
+| id | name    |
++----+---------+
+| 1  | Alice   |
+| 2  | Bob     |
+| 3  | Charlie |
+| 4  | Diana   |
+| 5  | Eve     |
++----+---------+
+
+orders Table
++----------+--------+------------+-------------+
+| order_id | amount | order_date | customer_id |
++----------+--------+------------+-------------+
+| 1        | 99.99  | 2024-07-01 | 1           |
+| 2        | 150.50 | 2024-07-02 | 2           |
+| 3        | 200.00 | 2024-07-03 | 3           |
+| 4        | 75.75  | 2024-07-04 | 4           |
+| 5        | 125.25 | 2024-07-05 | 5           |
++----------+--------+------------+-------------+
+```
+
+
+##### Migrations commands
+````php
+$table->foreign('customer_id)->references('id')->on('customers');
+````
+
+
+### step:01 (Model file)
+create Customers,Orders models file
+
+
+
+### step : 02
+#### contact model file->(Models/Customers.php)
+````php
+public function latestOrder() {
+    return $this->hasOne(Order::class)->latestOfMany();  
+    
+    //   Latest Order->latestOfMany
+    //   Oldest Order->oldestOfMany
+    //   Largest Order->largestOfMany
+    //   Smallest Order->smallestOfMany
+       
+}
+````
+
+
+### step:03
+##### controller file -> (Customers.php)
+##### Import orders and Customers Model file
+````php
+    user App\Model\User;
+    user App\Model\Company;
+    class UserController extends Controller{
+        public function index(){
+              $customers = Customer::get();
+//              $customers = Customer::with("latestOrder")->find(2)    
+              return $customers;
+         
+        }
+}
+````
+
+
+### step : 04
+#### Route
+````php
+    Route::resource('user',CustomerController::class);
+````
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
