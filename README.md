@@ -2961,7 +2961,7 @@ public function student() {
 ````
 
 
-## One to Many Relationship
+## Eloquent One to Many Relationship
 
 ##### one to many relationship table used interface
 ````php
@@ -3016,7 +3016,7 @@ $table->timestamps();
 
 
 
-## Many to Many Relationship
+## Eloquent Many to Many Relationship
 ````php
 Users Table          user_role Table             Roles Table
 
@@ -3127,7 +3127,7 @@ public function create () {
 
 
 
-### Has One Through Relationship
+### Eloquent Has One Through Relationship
 
 ````php
 Users Table
@@ -3214,7 +3214,7 @@ public function companyPhoneNumber() {
 ````
 
 
-### Has One of Many Relationship
+### Eloquent Has One of Many Relationship
 ```php
 customers Table
 +----+---------+
