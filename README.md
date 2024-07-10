@@ -3146,7 +3146,7 @@ Company table
 +----+--------------+---------+
 | 1  | Company A    | 1       |
 | 2  | Company B    | 2       |
-| 3  | Company C    | 1       |
+| 3  | Company C    | 3       |
 +----+--------------+---------+
 
 
@@ -3156,7 +3156,7 @@ Phone_number table
 +----+--------------+------------+
 | 1  | 123-456-7890 | 1          |
 | 2  | 987-654-3210 | 2          |
-| 3  | 555-123-4567 | 1          |
+| 3  | 555-123-4567 | 3          |
 +----+--------------+------------+
 ````
 
@@ -3224,7 +3224,6 @@ customers Table
 | 2  | Bob     |
 | 3  | Charlie |
 | 4  | Diana   |
-| 5  | Eve     |
 +----+---------+
 
 orders Table
@@ -3233,9 +3232,9 @@ orders Table
 +----------+--------+------------+-------------+
 | 1        | 99.99  | 2024-07-01 | 1           |
 | 2        | 150.50 | 2024-07-02 | 2           |
-| 3        | 200.00 | 2024-07-03 | 3           |
-| 4        | 75.75  | 2024-07-04 | 4           |
-| 5        | 125.25 | 2024-07-05 | 5           |
+| 3        | 200.00 | 2024-07-03 | 2           |
+| 4        | 75.75  | 2024-07-04 | 3           |
+| 5        | 125.25 | 2024-07-05 | 1           |
 +----------+--------+------------+-------------+
 ```
 
@@ -3288,6 +3287,171 @@ public function latestOrder() {
 ````php
     Route::resource('user',CustomerController::class);
 ````
+
+
+
+
+## Eloquent Has Many Through Relationship
+
+````php
+Countries Table
++----+---------+
+| id | name    |
++----+---------+
+| 1  | USA     |
+| 2  | Canada  |
+| 3  | Mexico  |
+| 4  | Germany |
+| 5  | Japan   |
++----+---------+
+
+
+Users Table
++----+---------+------------+
+| id | name    | country_id |
++----+---------+------------+
+| 1  | Alice   | 1          |
+| 2  | Bob     | 2          |
+| 3  | Charlie | 3          |
+| 4  | Diana   | 1          |
+| 5  | Eve     | 5          |
+| 6  | Res     | 2          |
++----+---------+------------+
+
+
+Post Table
++----+--------+----------------+---------+
+| id | title  | detail         | user_id |
++----+--------+----------------+---------+
+| 1  | Post 1 | Detail of Post 1 | 1     |
+| 2  | Post 2 | Detail of Post 2 | 2     |
+| 3  | Post 3 | Detail of Post 3 | 1     |
+| 4  | Post 4 | Detail of Post 4 | 5     |
+| 5  | Post 5 | Detail of Post 5 | 5     |
++----+--------+----------------+---------+
+````
+
+
+
+##### Migrations commands
+````php
+$table->foreign('country_id')->references('id')->on('Countries');
+$table->foreign('user_id')->references('id')->on('Users');
+````
+
+
+### step:01 (Model file)
+create Countries,Users,Post models file
+
+
+
+### step : 02
+#### contact model file->(Models/Countries.php)
+````php
+public function user() {
+    return $this->hasMany(User::class);  
+}
+
+public function posts() {
+    return $this->hasManyThrough(Post::class,User::class);  
+}
+````
+
+
+#### contact model file->(Models/User.php)
+````php
+public function posts() {
+    return $this->hasMany(Post::class);  
+}
+
+public function countries() {
+    return $this->belongsTO(Countries::class);  
+}
+````
+
+
+### step:03
+##### controller file -> (Customers.php)
+##### Import orders and Customers Model file
+````php
+    user App\Model\User;
+    user App\Model\Company;
+    class CustomersController extends Controller{
+        public function index(){
+//              $countries = Countries::with('posts')->get();
+//              $countries = Countries::with('posts')->find(1);
+                $countries = Countries::with('posts')->with('posts')->get(1);
+                return $country->posts;
+         
+        }
+}
+````
+
+##### controller file -> (User.php)
+##### Import orders and Customers Model file
+````php
+    user App\Model\User;
+    user App\Model\Company;
+    class UserController extends Controller{
+        public function index(){
+//                $users = User::with('posts')->get(1);
+                  $users = User::with('posts')->with('countries')->get(1);
+                  return  $users;
+         
+        }
+}
+````
+
+
+### step : 04
+#### Route
+````php
+    Route::resource('countries',CountriesController::class);
+    Route::resource('user',UserController::class);
+    Route::resource('post',PostController::class);
+````
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
