@@ -3412,6 +3412,164 @@ public function countries() {
 ````
 
 
+## One to One (Polymorphic)
+
+````php
+Users Table
++----+---------+
+| id | name    |
++----+---------+
+| 1  | Alice   |
+| 2  | Bob     |
+| 3  | Charlie |
++----+---------+
+
+Images Table
++----+----------------------------+---------------+
+| id | url        | imageable_id  | imageable_type|
++----+----------------------------+---------------+
+| 1  | image1.jpg | 1             | User          |
+| 2  | image2.jpg | 2             | User          |
+| 3  | image3.jpg | 1             | Post          |
+| 4  | image4.jpg | 3             | User          |
+| 5  | image5.jpg | 2             | Post          |
++----+----------------------------+---------------+
+
+Posts Table
++----+-------------+
+| id | title       |
++----+-------------+
+| 1  | First Post  |
+| 2  | Second Post |
+| 3  | Third Post  |
++----+-------------+
+````
+### step:01 (Model file)
+create Image,User,Post models file
+
+
+### step : 02
+#### contact model file->(Models/Image.php)
+````php
+public function imageable() {
+    return $this->morphTo(User::class);  
+}
+
+````
+
+
+#### contact model file->(Models/User.php)
+````php
+public function image() {
+    return $this->morphOne(Image::class,'imageable');  
+}
+
+````
+
+#### contact model file->(Models/Post.php)
+````php
+public function image() {
+    return $this->morphOne(Image::class,'imageable');  
+}
+````
+
+
+### step:03
+##### controller file -> (User.php)
+````php
+    user App\Model\User;
+    class UserController extends Controller{
+        public function create(){
+                $user = User::find(1);
+                $user->image()->create([
+                
+                'url'=>'images/users/user1.jpg'
+            ]); 
+         
+        }
+}
+
+//user,image model file open and create a protected $guarded=[]; public $timestamps = false;
+//post model file open and create a protected $guarded=[];
+````
+
+
+##### controller file -> (Post.php)
+##### Import post and Customers Model file
+##### create
+````php
+    user App\Post\Post;
+    class PostController extends Controller{
+        public function create(){
+         $post = Post::create([
+         'title'=>"News Title One",
+         'description'=>'Sldf sdfosdfn jfsodfwe sijf',      
+        ])
+          $post->image()->create([
+          'url'=>'images/post/post-one.jpg'
+        ])  
+    }
+}
+````
+
+##### view
+````php
+    user App\Post\Post;
+    class PostController extends Controller{
+        public function Show(){
+
+             $post = post::with('image')->find(1);
+             return $post;
+         
+        }
+}
+````
+
+### step : 04
+#### Route
+````php
+
+    Route::resource('user',UserController::class);
+    Route::resource('post',PostController::class);
+    Route::resource('image',ImageController::class);
+````
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
