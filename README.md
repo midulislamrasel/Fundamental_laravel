@@ -3537,6 +3537,249 @@ public function image() {
 
 
 
+## Eloquent One to Many(Polymorphic)
+
+````php
+Posts Table
++----+-------------+
+| id | title       |
++----+-------------+
+| 1  | First Post  |
+| 2  | Second Post |
+| 3  | Third Post  |
++----+-------------+
+
+Videos Table
++----+-------------+------------------------+
+| id | title       | url                    |
++----+-------------+------------------------+
+| 1  | First Video | http://example.com/vi  |
+| 2  | Second Video| http://example.com/vid |
+| 3  | Third Video | http://example.com/vi  |
++----+-------------+------------------------+
+
+Comments Table
++----+--------------------+----------------+------------------+
+| id | detail             | commentable_id | commentable_type |
++----+--------------------+----------------+------------------+
+| 1  | Great post!        | 1              | Post             |
+| 2  | Interesting read.  | 2              | Post             |
+| 3  | Nice video!        | 1              | Video            |
+| 4  | Very informative.  | 2              | Video            |
+| 5  | Loved the content! | 3              | Post             |
++----+--------------------+----------------+------------------+
+
+````
+
+
+### step:01 (Model file)
+create Comment,Post,Video models file
+
+
+### step : 02
+#### contact model file->(Models/comment.php)
+````php
+public function commentable() {
+    return $this->morphTo(User::class);  
+}
+
+````
+
+#### contact model file->(Models/Post.php)
+````php
+public function comments() {
+    return $this->morphMany(Comment::class,'commentable');  
+}
+````
+
+
+
+#### contact model file->(Models/Video.php)
+````php
+public function comments() {
+    return $this->morphMany(Comment::class,'commentable');  
+}
+
+````
+
+
+### step:03
+##### controller file -> (VideoController.php)
+##### Import post and Customers Model file
+````php
+    class VideoController extends Controller{
+        public function index(){
+            $video = video::find(1);
+            return $video->comments;
+    }
+}
+````
+
+##### controller file -> (Video.php)
+##### create
+````php
+    class VideoController extends Controller{
+        public function create(){
+                $video = video::find(1);
+                $video->comments()->create([
+                
+                'detail'=>'Best Video'
+            ]); 
+         
+        }
+}
+
+//Comments model file open and create a protected $guarded=[]; public $timestamps = false;
+//post model file open and create a protected $guarded=[];
+````
+
+### step : 04
+#### Route
+````php
+
+    Route::resource('video',VideoController::class);
+    Route::resource('post',PostController::class);
+    Route::resource('comment',CommentController::class);
+````
+
+
+
+
+
+## Eloquent Many to Many Polymorphic
+
+````php
+
+Posts Table
++----+-------------+
+| id | title       |
++----+-------------+
+| 1  | First Post  |
+| 2  | Second Post |
+| 3  | Third Post  |
++----+-------------+
+
+Tags Table
++----+--------------+
+| id | name         |
++----+--------------+
+| 1  | Technology   |
+| 2  | Education    |
+| 3  | Entertainment|
++----+--------------+
+
+Videos Table
++----+-------------+------------------------+
+| id | title       | url                    |
++----+-------------+------------------------+
+| 1  | First Video | http://example./video1 |
+| 2  | Second Video| http://example./video2 |
+| 3  | Third Video | http://example./video3 |
++----+-------------+------------------------+
+
+Taggables Table
++--------+--------------+----------------+
+| tag_id | taggable_id  | taggable_type  |
++--------+--------------+----------------+
+| 1      | 1            | Post           |
+| 2      | 1            | Post           |
+| 3      | 2            | Post           |
+| 1      | 1            | Video          |
+| 2      | 2            | Video          |
+| 3      | 3            | Video          |
++--------+--------------+----------------+
+
+````
+
+### step:01 (Model file)
+createPost,Tag,Video models file
+
+
+### step : 02
+#### contact model file->(Models/post.php)
+````php
+protected $guarder = [];
+public $timestamps = false;
+
+public function tags() {
+    return $this->morphToMany(Tag::class,'taggable');  
+}
+
+````
+#### contact model file->(Models/Video.php)
+````php
+protected $guarder = [];
+public $timestamps = false;
+
+public function tags() {
+    return $this->morphToMany(Tag::class,'taggable');  
+}
+````
+
+#### contact model file->(Models/tag.php)
+````php
+protected $guarder = [];
+public $timestamps = false;
+
+public function posts() {
+    return $this->morphByMany(Poss::class,'taggable');  
+}
+
+public function videos() {
+    return $this->morphByMany(Video::class,'taggable');  
+}
+````
+
+
+
+### step:03
+##### controller file -> (PostController.php)
+##### Import post and Customers Model file
+````php
+    use App\Models\Post;
+    class PostController extends Controller{
+        public function index(){
+            $post = Post::find(1);
+            return $post->tags;
+    }
+    
+    
+    public function create(){
+                $post = Post::create([
+                'title'=>'Best Video',
+                'description'=>'lorem is sums.......'
+            ]); 
+            
+            $post->tage()->create([
+                'tag_name'=>'Sachin Tendulkar'
+             ])                                              
+         
+        }
+}
+````
+
+### step : 04
+#### Route
+````php
+
+    Route::resource('video',VideoController::class);
+    Route::resource('post',PostController::class);
+    Route::resource('tag',TagController::class);
+````
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
