@@ -3770,7 +3770,7 @@ public function videos() {
 
 
 
-
+## Laravel Observers & Model Events
 
 
 
