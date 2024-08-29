@@ -3773,8 +3773,38 @@ public function videos() {
 ## Laravel Observers & Model Events
 
 
+### model Events
+#### setp : 01
+```php
+App/Models/Post.php
+```
+
+#### setp : 02
+```php
+protected static function booted():void{
+
+   static::created(function($post){
+     
+      })
 
 
+  ststic::deletd(function($post){
+
+
+    })
+
+}
+```
+*Creating
+*Created
+*Saving
+*Updating
+*u[dated
+*Deleting
+*Deleted
+*Restoring
+*Restored
+*Retrieved
 
 
 
