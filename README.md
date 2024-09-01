@@ -3795,16 +3795,16 @@ protected static function booted():void{
 
 }
 ```
-*Creating
-*Created
-*Saving
-*Updating
-*u[dated
-*Deleting
-*Deleted
-*Restoring
-*Restored
-*Retrieved
+* Creating 
+* Created
+* Saving
+* Updating
+* updated
+* Deleting
+* Deleted
+* Restoring
+* Restored
+* Retrieved
 
 
 
