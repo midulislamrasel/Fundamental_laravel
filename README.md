@@ -3797,6 +3797,43 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
+#### Database Data insert
+##### users
+```php
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL
+);
+
+INSERT INTO users (name, email) VALUES
+('John Doe', 'john.doe@example.com'),
+('Jane Smith', 'jane.smith@example.com'),
+('Alice Johnson', 'alice.johnson@example.com'),
+('Bob Brown', 'bob.brown@example.com');
+```
+##### Posts
+```php
+CREATE TABLE posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+    description TEXT NOT NULL,
+    counter INT DEFAULT 0,
+    user_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+INSERT INTO posts (title, slug, description, counter, user_id) VALUES
+('First Post', 'first-post', 'This is the description for the first post.', 10, 1),
+('Second Post', 'second-post', 'This is the description for the second post.', 20, 2),
+('Third Post', 'third-post', 'This is the description for the third post.', 30, 3),
+('Fourth Post', 'fourth-post', 'This is the description for the fourth post.', 40, 4);
+
+```
+
+
 #### setp : 02
 migrations 
 * users
