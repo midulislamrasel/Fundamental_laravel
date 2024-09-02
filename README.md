@@ -4016,18 +4016,145 @@ Route::resource('post', PostController::class);
 
 
 ## Laravel Observers
+
+#### setp : 01
  ```php
 php artisan make:observer PostObserver --model=Post
+php artisan make:observer UserObserver --model=User
 ```
 
+#### setp : 02
+Model Fille 
+```php
+<?php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    use HasFactory;
+
+    public function post(){
+        return $this->hasMany(Post::class);
+    }
+}
+```
+
+#### setp : 03
+### Controllers 
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class UserController extends Controller
+{
+
+    public function index()
+    {
+       $user = User::with('post')->find(2);
+       return $user;
+
+    }
+    public function create()
+    {
+        $user = User::find(2)->delete();
+
+    }
+    public function store(Request $request)
+    {
+        //
+    }
+    public function show(string $id)
+    {
+        //
+    }
+    public function edit(string $id)
+    {
+        //
+    }
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+    public function destroy(string $id)
+    {
+
+    }
+}
+
+```
+
+#### setp : 04
+User Observers
+```php
+<?php
+
+namespace App\Observers;
+use App\Models\User;
+
+class UserObserver
+{
+
+    public function created(User $user): void
+    {
+        //
+    }
+
+    public function updated(User $user): void
+    {
+        //
+    }
+
+    public function deleted(User $user): void
+    {
+        $user->post()->delete();
+    }
 
 
+    public function restored(User $user): void
+    {
+        //
+    }
 
 
+    public function forceDeleted(User $user): void
+    {
+        //
+    }
+}
+```
+#### setp : 05
+#### Providers Fille -> AppServiceProvider
+```php
+<?php
 
+namespace App\Providers;
 
+use App\Models\User;
+use App\Observers\UserObserver;
+use Illuminate\Support\ServiceProvider;
 
+class AppServiceProvider extends ServiceProvider
+{
 
+    public function register(): void
+    {
+        //
+    }
+
+    public function boot(): void
+    {
+        User::observe(UserObserver::class);
+    }
+}
+```
 
 
 
