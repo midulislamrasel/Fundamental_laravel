@@ -4015,7 +4015,10 @@ Route::resource('post', PostController::class);
 ```
 
 
-
+## Laravel Observers
+ ```php
+php artisan make:observer PostObserver --model=Post
+```
 
 
 
