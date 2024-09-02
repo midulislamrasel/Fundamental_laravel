@@ -3773,28 +3773,6 @@ public function videos() {
 ## Laravel Observers & Model Events
 
 
-### model Events
-#### setp : 01
-```php
-App/Models/Post.php
-```
-
-#### setp : 02
-```php
-protected static function booted():void{
-
-   static::created(function($post){
-     
-      })
-
-
-  ststic::deletd(function($post){
-
-
-    })
-
-}
-```
 * Creating 
 * Created
 * Saving
@@ -3807,17 +3785,197 @@ protected static function booted():void{
 * Retrieved
 
 
+### model Events
+#### setp : 01
+.env
+```php
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=modelEvents
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+#### setp : 02
+migrations 
+* users
+* posts
+
+ ##### user migrations
+```php
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('users');
+    }
+};
+
+```
+ ##### posts migrations
+```php
+<?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->id();
+            $table->string('title',50);
+            $table->string('slug',50);
+            $table->longText('description');
+            $table->integer('content')->default(0);
+            $table->unsignedBigInteger('user_id');
+            $table->timestamps();
+        });
+    }
+    public function down(): void
+    {
+        Schema::dropIfExists('posts');
+    }
+};
+```
+
+#### setp : 03 
+* Seeders
 
 
+#### setp : 04 Model file
+* Post
+* User
+
+##### User Model
+```php
+<?php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    use HasFactory;
+
+    public function post(){
+        return $this->hasMany(Post::class);
+    }
+
+protected static function booted() : void{
+        static::deleted(function($user){
+            $user->post()->delete();
+        });
 
 
+//    static::created(function($user){
+//
+//    });
 
 
+//    static::updated(function($user){
+//
+//    });
+
+    }
+}
+```
 
 
+#### setp : 04 Controllers file
+* PostController
+* UserController
 
 
+###### UserController File
+```php
 
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class UserController extends Controller
+{
+
+    public function index()
+    {
+       $user = User::with('post')->find(2);
+       return $user;
+
+    }
+
+    public function create()
+    {
+        $user = User::find(2)->delete();
+    }
+
+
+    public function store(Request $request)
+    {
+        //
+    }
+
+    public function show(string $id)
+    {
+        //
+    }
+
+    public function edit(string $id)
+    {
+        //
+    }
+
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    public function destroy(string $id)
+    {
+        //
+    }
+}
+```
+
+#### setp : 04 Routes file
+
+```php
+<?php
+
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::resource('user', UserController::class);
+Route::resource('post', PostController::class);
+```
 
 
 
