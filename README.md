@@ -4160,6 +4160,27 @@ class AppServiceProvider extends ServiceProvider
 
 
 
+### Image / Other File Upload
+
+##### step: 01
+```php
+    <form method="POST" enctype="multipart/form-data">
+        @csrf
+        <imput type="file" name="photo" accept="image/*">
+    </form>
+```
+
+##### step: 02
+```php
+$request->validate([
+    'photo'=>'required|mimes:jpg,png,gif|max:300',
+    
+])
+```
+##### step: 03
+```php
+$request->file('photo')->store('images');
+```
 
 
 
