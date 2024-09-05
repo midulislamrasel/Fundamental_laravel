@@ -4177,7 +4177,11 @@ $request->validate([
     
 ])
 ```
+
+
 ##### step: 03
+* store
+* storeAS
 ```php
 $request->file('photo')->store('images');
 ```
