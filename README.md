@@ -4251,8 +4251,38 @@ public function __construct(public string $type, public string $message){
 
 
 
-### laravel slot and advance
+### Authentication 
+##### *  Manually Authentication with Auth Class
+##### *  Session Based Authentication
+##### *  Starter Kit
+##### *  API Authentication
 
+```php
+php aritsan make:comonents Alert
+```
+
+#### step:01
+```php
+use Illuminate\Support\Facades\Auth
+
+class UserController extends Controller{
+    public function login(Request $request){
+        $credentials = $request->validate([
+        'email'=>'request | email',
+        'password'=>'required',
+]);
+
+    if(Auth::attempt($credentials)){
+       if(Auth::check()){
+             return view('dashboard');
+            }else{
+                return redirect()->route('login')
+            }
+        }
+    }
+
+}
+```
 
 
 
