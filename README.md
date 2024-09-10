@@ -4288,6 +4288,56 @@ class UserController extends Controller{
 
 
 
+### Type of Middleware
+
+####    * Route Middleware
+####    * Middleware Group
+####    * Global Middleware
+
+##### * artisan commends
+```php
+php artisan make:middleware ValidUser
+```
+##### step : 01 
+App/http/middleware/ValidUser.php
+
+```php
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;use Symfony\Component\HttpFoundation\Response;
+
+class ValidUser
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+    // -------------middleware create -----------
+       if(Auth::check()){
+       return $next($request);
+       }else{
+       return redirect()->route('login')
+       }
+    }
+}
+```
+
+##### step : 02
+Routes/web.php
+
+```php
+use App\Http\Controllers\UserController;
+use App\Http\Middleware\ValidUser;
+
+
+Route::get('/dashboard',[UserController::class,'dashboard'])->middleware(ValidUser::class)
+
+```
+
+
+
 
 
 
