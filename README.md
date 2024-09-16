@@ -4347,6 +4347,77 @@ Route::get('/dashboard',[UserController::class,'dashboard'])->middleware(ValidUs
 
 
 
+## API
+
+### Steps to Work With APIS
+
+#### step:01
+```php
+    php artisan install:api
+```
+#### step:02
+###### Models/User.php
+```php
+    use Laravel\Sanctum\HasApiTokens;
+
+
+    use HasApiTokens;
+```
+
+
+#### step:03
+##### UserController File
+```php
+public function login( Request $request) {
+    
+    if(Auth::attempt(['email'=>$request->email,'password'=>$request->password])){
+        return response()->json([
+            'status'=>true,
+            'message'=>'User logged in Successfull',
+            'token'=>Autho::user()->createToken("API TOKEN")->plainTextToken,
+            'token_type'=>'bearer'
+            ],200)
+   
+    }else{
+             return response()->json([
+             'status'=>false,
+             'message'=>'Email & Password does not match with our record.'     
+        ]401)
+    }
+    
+    
+}
+
+```
+
+#### step:04
+##### UserController File
+
+```php
+publice function logout(Reques $request){
+    $user=$request->user();
+    $user->tokens()->delete();
+    
+    
+    return response()->json([
+        'status'=>true,
+        'user'=>$user,
+        'message'=>"You Have successfully been logged",
+    ],200)
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+ 
 
 
 
