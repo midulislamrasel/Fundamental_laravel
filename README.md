@@ -20,6 +20,44 @@ laravel new example-app
 ```
 
 
+
+
+### Bootstrap Setup
+#### step:01
+```php
+npm i -D bootstrap @popperjs/core sass
+```
+#### step:02
+##### Create a Sass folder
+```php
+  //Resourcess/sass/app.cess
+  @import 'bootstrap/scss/bootstrap';
+```
+
+
+#### step:03
+##### Resourcess/js/app.js
+```php
+  @import * as bootstrap from 'bootstrap;
+```
+
+#### step:04
+##### Resourcess/views/welcome.blade.php
+```php
+ <head>
+  @vite(['resources/sass/app.scss','resources/js/app.js'])
+<head>
+```
+
+#### step:05
+##### Resourcess/views/welcome.blade.php
+```php
+   npm run dev
+```
+
+
+
+
 ##### Once the project has been created, start Laravel's local development server using Laravel Artisan's serve command:
 
 ```php
