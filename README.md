@@ -30,7 +30,7 @@ npm i -D bootstrap @popperjs/core sass
 #### step:02
 ##### Create a Sass folder
 ```php
-  //Resourcess/sass/app.cess
+  //Resourcess/sass/app.sass
   @import 'bootstrap/scss/bootstrap';
 ```
 
