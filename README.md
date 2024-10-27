@@ -28,9 +28,9 @@ laravel new example-app
 npm i -D bootstrap @popperjs/core sass
 ```
 #### step:02
-##### Create a Sass folder
+##### Create a sass folder
 ```php
-  //Resourcess/sass/app.sass
+  //Resourcess/sass/app.scss
   @import 'bootstrap/scss/bootstrap';
 ```
 
