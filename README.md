@@ -38,7 +38,7 @@ npm i -D bootstrap @popperjs/core sass
 #### step:03
 ##### Resourcess/js/app.js
 ```php
-  @import * as bootstrap from 'bootstrap;
+ import * as bootstrap from "bootstrap";
 ```
 
 #### step:04
