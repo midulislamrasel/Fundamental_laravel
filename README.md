@@ -22,6 +22,18 @@ laravel new example-app
 
 
 
+
+##### Once the project has been created, start Laravel's local development server using Laravel Artisan's serve command:
+
+```php
+cd example-app
+ 
+php artisan serve
+```
+
+
+
+
 ### Bootstrap Setup
 #### step:01
 ```php
@@ -58,13 +70,12 @@ npm i -D bootstrap @popperjs/core sass
 
 
 
-##### Once the project has been created, start Laravel's local development server using Laravel Artisan's serve command:
 
-```php
-cd example-app
- 
-php artisan serve
-```
+
+
+
+
+
 
 #### VS CODE EXTENSIONS  
 ##### use full easy coding in Laravel
